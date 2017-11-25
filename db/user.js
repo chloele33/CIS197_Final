@@ -7,8 +7,12 @@ var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 
 var userSchema = new Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  username: { type: String, lowercase: true, required: true, unique: true },
+  password: { type: String, required: true },
+  name: { type: String, required: true},
+  email: {type: String, lowercase: true, required: true, unique: true, match: [/\S+@\S+\.\S+/, 'Invalid Email. Valid email example: hello@foodiegram.com']},
+  bio: { type: String},
+
 });
 
 userSchema.pre('save', function(next) {
@@ -29,8 +33,8 @@ userSchema.pre('save', function(next) {
 
 // bad practice, becasue actually should check if username exists in the database. 
 // this also throws an error, but we should throw an error intentionally ourselves. 
-userSchema.statics.addUser = function(username, password, cb) {
-  var newUser = new this({ username: username, password: password});
+userSchema.statics.addUser = function(username, password, name, email, cb) {
+  var newUser = new this({ username: username, password: password, name: name, email: email});
   newUser.save(cb);
 }
 

@@ -42,6 +42,49 @@ app.get('/login', function (req, res) {
   res.render('login');
 });
 
+app.post('/login', function(req, res) {
+  username = req.body.username;
+  password = req.body.password;
+  User.checkIfLegit(username, password, function(err, isRight) {
+    if (err) {
+      res.send('Error! ' + err);
+    } else {
+      if (isRight) {
+        req.session.username = username;
+        res.redirect('/feed');
+      } else {
+        res.send('wrong password');
+      }
+    }
+  });
+});
+
+// signup page 
+app.get('/signup', function (req, res) {
+  res.render('signup');
+});
+
+app.post('/signup', function(req, res) {
+  User.addUser(req.body.username, req.body.password, req.body.fullname, req.body.email, function(err) {
+    if (err) {
+    	res.send('error' + err);
+    } else {
+    	res.send('new user registered with username ' + req.body.username);
+    }
+  });
+});
+
+// enter feed
+app.get('/feed', function(req, res) {
+  if (!req.session.username || req.session.username === '') {
+    res.send('You tried to access a protected page');
+  } else {
+    res.render('protected', { username: req.session.username });
+  }
+});
+
+
+// connect server
 app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'), function() { 
