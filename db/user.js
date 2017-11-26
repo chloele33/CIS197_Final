@@ -12,7 +12,7 @@ var userSchema = new Schema({
   password: { type: String, required: true },
   fullname: { type: String, required: true},
   email: {type: String, lowercase: true, required: true, unique: true, match: [/\S+@\S+\.\S+/, 'Invalid Email. Valid email example: hello@foodiegram.com']},
-  bio: { type: String},
+  bio: { type: String, default: ''},
   posts: [{type: Schema.ObjectId, ref: 'Post'}],
   following: [{ type: Schema.ObjectId, ref: 'User' }],
   followers: [{ type: Schema.ObjectId, ref: 'User' }],
@@ -20,6 +20,7 @@ var userSchema = new Schema({
 });
 
 var postSchema = new Schema({
+  img: {data: Buffer, contentType: String},
   _creater: { type: Schema.ObjectId, ref: 'User' }, 
   likes: [{ type: Schema.ObjectId, ref: 'User' }], 
   rating: {type: Number, max: 5, min: 0},
@@ -122,6 +123,13 @@ userSchema.statics.getBio = function (username, cb) {
   });
 }
 
+// postSchema statics/methods
+postSchema.statics.addPost = function (username, imagePath, rating, caption, cb) {
+  User.findOne({username: username}, function(err, user) {
+
+  });
+}
+
 // save models
 var User = mongoose.model('User', userSchema);
 var Place = mongoose.model('Place', placeSchema);
@@ -129,4 +137,4 @@ var Post = mongoose.model('Post', postSchema);
 var Comment = mongoose.model('Comment', commentSchema);
 
 
-module.exports = User;
+module.exports = {user: User, post: Post};

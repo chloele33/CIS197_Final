@@ -4,7 +4,8 @@ var uuid = require('node-uuid');
 
 var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
-var User = require('./db/user');
+var data = require('./db/user.js');
+var User = data.user;
 
 // Serve static pages
 app.engine('html', require('ejs').__express);
@@ -25,7 +26,7 @@ app.use(cookieSession({
 
 // body Parser middleware
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: true
 }));
 
 app.get('/', function (req, res) {
@@ -55,14 +56,25 @@ app.get('/feed', function (req, res) {
 });
 
 app.post('/feed', function (req, res) {
-  if (req.body.act == "updateProfile") {
+  if (req.body.act == 'updateProfile') {
     res.redirect('/editProfile');
+  } else if (req.body.act == 'newPost') {
+    res.redirect('/newpost');
   }
 });
 
 // edit profile router
 var editProfileRouter = require('./routes/editprofile');
 app.use('/', editProfileRouter);
+
+// new post router
+var newPostRouter = require('./routes/newpost');
+app.use('/', newPostRouter);
+
+app.get('/logout', function(req, res) {
+  req.session.username = '';
+  res.render('logout');
+});
 
 // connect server
 app.set('port', process.env.PORT || 3000);

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../db/user');
+var data = require('../db/user.js');
+var User = data.user;
 
 
 

@@ -3,10 +3,67 @@ html {
 }
 
 h1 {
+  cursor: default;
   font: 3em "Arial Rounded MT Bold", "Optima", "Arial";
   text-align: center;
 }
 
+p {
+  cursor: default;
+}
+
 form {
   text-align: center;
+}
+
+img {
+	height: 20em;
+}
+ 
+ 
+.acidjs-rating-stars input
+{
+    display: none;
+}
+ 
+.acidjs-rating-stars
+{
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+ 
+.acidjs-rating-stars label
+{
+    color: #ccc;
+}
+ 
+.acidjs-rating-stars label:hover,
+.acidjs-rating-stars label:hover ~ label
+{
+    color: #ffeecc;
+}
+.acidjs-rating-stars label::before
+{
+    content: "\2605";
+    width: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+ 
+.acidjs-rating-stars input:checked ~ label
+{
+    color: #f5b301;
+}
+ 
+.acidjs-rating-disabled
+{
+    opacity: .50;
+    -webkit-pointer-events: none;
+    -moz-pointer-events: none;
+    pointer-events: none;
+}
+
+p.binary {
+	visibility: hidden;
 }
