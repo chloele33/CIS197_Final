@@ -61,6 +61,21 @@ userSchema.pre('save', function(next) {
 // bad practice, becasue actually should check if username exists in the database. 
 // this also throws an error, but we should throw an error intentionally ourselves. 
 userSchema.statics.addUser = function(username, password, name, email, cb) {
+  // User.find({username: username, email: email}, function(err, docs) {
+  //   if (docs.length != 0){
+  //     if(docs[0].username) {
+  //       cb('Username exists already',null);
+  //     } else {
+  //       cb('Email exists already',null);
+  //     }
+  //   } else {
+  //     if (err) {
+  //       return cb(err);
+  //     }
+  //     var newUser = new this({ username: username, password: password, name: name, email: email});
+  //     newUser.save(cb);
+  //   }
+  // });
   var newUser = new this({ username: username, password: password, name: name, email: email});
   newUser.save(cb);
 }
@@ -74,6 +89,13 @@ userSchema.statics.checkIfLegit = function(username, password, cb) {
         cb(null, isRight);
       });
     };
+  });
+}
+
+userSchema.statics.updateBio = function (username, bio, cb) {
+  User.findOne({username: username}, function(err, user) {
+      user.bio = bio;
+      user.save();
   });
 }
 
