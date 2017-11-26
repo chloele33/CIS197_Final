@@ -1,9 +1,21 @@
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/editprofile.js"></script>
+
 <h1>Welcome, <%= username %></h1>
 
    	<form method="post">
-	  <p>Enter Bio<br>
-	  <input type="text" name="bio"></p>
-	  <p><button type="submit">Update Bio</button></p>
+
+   		<div>
+		  <p>Name<br>
+		  <input type="text" name="fullname" value = '<%= fullname %>'> </p>
+		</div>
+
+	   	<div>
+		  <p>Bio<br>
+		  <textarea type="text" name="bio"><%=bio%></textarea></p>
+		</div>
+
+		<p><button type="submit">Update Profile</button></p>
 	</form>
 
 <a href="/logout">Logout</a>

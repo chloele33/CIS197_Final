@@ -45,8 +45,8 @@ app.use('/', loginRouter);
 var signupRouter = require('./routes/signup');
 app.use('/', signupRouter);
 
-// enter feed
-app.get('/feed', function(req, res) {
+// enter feed, which will be a react front end eventually 
+app.get('/feed', function (req, res) {
   if (!req.session.username || req.session.username === '') {
     res.send('You tried to access a protected page');
   } else {
@@ -54,20 +54,15 @@ app.get('/feed', function(req, res) {
   }
 });
 
-app.post('/feed', function(req, res) {
+app.post('/feed', function (req, res) {
   if (req.body.act == "updateProfile") {
     res.redirect('/editProfile');
   }
 });
 
-app.get('/editProfile' ,function(req, res) {
-  res.render('editProfile');
-});
-
-app.post('/editProfile', function(req, res) {
-  User.updateBio(req.session.username, req.body.bio);
-  res.send('Profile Updated.')
-});
+// edit profile router
+var editProfileRouter = require('./routes/editprofile');
+app.use('/', editProfileRouter);
 
 // connect server
 app.set('port', process.env.PORT || 3000);

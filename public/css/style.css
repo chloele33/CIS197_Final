@@ -1,0 +1,12 @@
+html {
+  font: 1em "Arial Rounded MT", "Optima", "Arial";
+}
+
+h1 {
+  font: 3em "Arial Rounded MT Bold", "Optima", "Arial";
+  text-align: center;
+}
+
+form {
+  text-align: center;
+}

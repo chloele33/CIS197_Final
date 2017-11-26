@@ -10,7 +10,7 @@ var bcrypt = require('bcrypt');
 var userSchema = new Schema({
   username: { type: String, lowercase: true, required: true, unique: true },
   password: { type: String, required: true },
-  name: { type: String, required: true},
+  fullname: { type: String, required: true},
   email: {type: String, lowercase: true, required: true, unique: true, match: [/\S+@\S+\.\S+/, 'Invalid Email. Valid email example: hello@foodiegram.com']},
   bio: { type: String},
   posts: [{type: Schema.ObjectId, ref: 'Post'}],
@@ -76,7 +76,7 @@ userSchema.statics.addUser = function(username, password, name, email, cb) {
   //     newUser.save(cb);
   //   }
   // });
-  var newUser = new this({ username: username, password: password, name: name, email: email});
+  var newUser = new this({ username: username, password: password, fullname: name, email: email});
   newUser.save(cb);
 }
 
@@ -96,6 +96,29 @@ userSchema.statics.updateBio = function (username, bio, cb) {
   User.findOne({username: username}, function(err, user) {
       user.bio = bio;
       user.save();
+  });
+}
+
+userSchema.statics.updateFullname = function (username, name, cb) {
+  User.findOne({username: username}, function(err, user) {
+      user.fullname = name;
+      user.save();
+  });
+}
+
+userSchema.statics.getFullname = function (username, cb) {
+  var name;
+  User.findOne({username: username}, function(err, user) {
+    name = user.fullname;
+    return cb(name);
+  });
+}
+
+userSchema.statics.getBio = function (username, cb) {
+  var bio;
+  User.findOne({username: username}, function(err, user) {
+    bio = user.bio;
+    return cb(bio);
   });
 }
 
