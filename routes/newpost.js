@@ -3,8 +3,6 @@ var router = express.Router();
 var data = require('../db/user.js');
 var User = data.user;
 var Post = data.post;
-var fs = require('fs');
-
 
 
 // Implement the routes for edit profile page
@@ -22,24 +20,27 @@ router.get('/newpost', function (req, res) {
 });
 
 router.post('/newpost', function (req, res) {
-  // User.updateBio(req.session.username, req.body.bio);
-  // User.updateFullname(req.session.username, req.body.fullname);
-  // res.send('Profile Updated.');
-  var rating = req.body.rate;
-  if (!rating) {
-  	rating = 0;
-  }
-  var caption = req.body.caption;
-  //var imageData = req.files.imagefile.path;
-  // console.log(imageData);
-  var imagePath = req.body.imagefile;
-  Post.addPost(req.session.username, imagePath, rating, caption, function(err) {
-	if (err) {
-      res.send('error' + err);
-    } else {
-      res.redirect('feed');
+  if (!req.files) {
+  	return res.status(400).send('No files were uploaded.');
+  } else {
+  	// retrieve all info from the form in newpost.html
+  	var imagefile = req.files.imagefile;
+
+    var rating = req.body.rate;
+    if (!rating) {
+  	  rating = 0;
     }
-  });
+    var caption = req.body.caption;
+
+    // call addPost method
+    Post.addPost(req.session.username, imagefile, rating, caption, function(err) {
+	  if (err) {
+        res.send('error' + err);
+      } else {
+        res.redirect('feed');
+      }
+    });
+  }
 });
 
 module.exports = router;

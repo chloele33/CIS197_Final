@@ -3,7 +3,7 @@
 
 <h1>Upload New Post</h1>
 
-   	<form method="post">
+   	<form ref='uploadForm'  id='uploadForm'  action="/newpost" method='post' encType="multipart/form-data">
 
    		<div>
 		  <p>Select Photo<br>
@@ -11,6 +11,14 @@
 			<img name = 'img' id="output"/>
 		  </P>
 		</div>
+
+<!--	<div>
+			<p> Select Photo<br>
+			 <form ref='uploadForm'  id='uploadForm'  action="/" method='post' encType="multipart/form-data">
+       			 <input type="file" name="sampleFile" />
+   			 </form>     
+   			</p>
+		</div> -->
 
 		<div class="acidjs-rating-stars">
 			<p> Rate this food <br>

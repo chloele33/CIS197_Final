@@ -6,6 +6,10 @@ var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var data = require('./db/user.js');
 var User = data.user;
+const fileUpload = require('express-fileupload');
+var fs = require('fs');
+
+
 
 // Serve static pages
 app.engine('html', require('ejs').__express);
@@ -26,8 +30,11 @@ app.use(cookieSession({
 
 // body Parser middleware
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: false
 }));
+
+// file upload
+app.use(fileUpload());
 
 app.get('/', function (req, res) {
   if (req.session.username && req.session.username !== '') {

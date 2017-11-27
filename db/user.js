@@ -26,7 +26,6 @@ var postSchema = new Schema({
   rating: {type: Number, max: 5, min: 0},
   caption: { type: String },
   created_at: Date, 
-  updated_at: Date,
   place: {type: Schema.ObjectId, ref: 'Place'},
   comments: [{ type: Schema.ObjectId, ref: 'Comment' }]
 });
@@ -124,9 +123,16 @@ userSchema.statics.getBio = function (username, cb) {
 }
 
 // postSchema statics/methods
-postSchema.statics.addPost = function (username, imagePath, rating, caption, cb) {
+postSchema.statics.addPost = function (username, imagefile, rating, caption, cb) {
   User.findOne({username: username}, function(err, user) {
-
+    var newPost = new Post({caption: caption, rating: rating, _creater: user._id});
+    newPost.created_at = new Date();
+    newPost.img.data = imagefile.data;
+    newPost.img.contentType = imagefile.mimetype;
+    newPost.save();
+    user.posts.push(newPost);
+    user.save();
+    cb(null);
   });
 }
 
