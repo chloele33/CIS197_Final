@@ -20,9 +20,17 @@ router.get('/editprofile', function (req, res) {
 });
 
 router.post('/editprofile', function (req, res) {
-  User.updateBio(req.session.username, req.body.bio);
-  User.updateFullname(req.session.username, req.body.fullname);
-  res.send('Profile Updated.');
+  if (!req.files.imagefile) {
+    User.updateBio(req.session.username, req.body.bio);
+    User.updateFullname(req.session.username, req.body.fullname);
+    res.redirect('myprofile');
+  } else {
+    var imagefile = req.files.imagefile;
+    User.updateProfilePic(req.session.username, imagefile);
+    User.updateBio(req.session.username, req.body.bio);
+    User.updateFullname(req.session.username, req.body.fullname);
+    res.redirect('myprofile');
+  }
 });
 
 module.exports = router;

@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-
+var fs = require('fs');
 mongoose.connect('mongodb://localhost/foodiegram');
 
 var Schema = mongoose.Schema;
@@ -16,7 +16,8 @@ var userSchema = new Schema({
   posts: [{type: Schema.ObjectId, ref: 'Post'}],
   following: [{ type: Schema.ObjectId, ref: 'User' }],
   followers: [{ type: Schema.ObjectId, ref: 'User' }],
-  favorites: [{type: Schema.ObjectId, ref: 'Post'}]
+  favorites: [{type: Schema.ObjectId, ref: 'Post'}], 
+  profilePic: {data: Buffer, contentType: String}
 });
 
 var postSchema = new Schema({
@@ -77,6 +78,8 @@ userSchema.statics.addUser = function(username, password, name, email, cb) {
   //   }
   // });
   var newUser = new this({ username: username, password: password, fullname: name, email: email});
+  newUser.profilePic.data = fs.readFileSync('defaultPic.png');
+  newUser.profilePic.contentType = 'image/png';
   newUser.save(cb);
 }
 
@@ -102,6 +105,14 @@ userSchema.statics.updateBio = function (username, bio, cb) {
 userSchema.statics.updateFullname = function (username, name, cb) {
   User.findOne({username: username}, function(err, user) {
       user.fullname = name;
+      user.save();
+  });
+}
+
+userSchema.statics.updateProfilePic = function (username, profilePic, cb) {
+  User.findOne({username: username}, function(err, user) {
+      user.profilePic.data = profilePic.data;
+      user.profilePic.contentType = profilePic.mimetype;
       user.save();
   });
 }

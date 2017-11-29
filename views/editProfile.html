@@ -1,9 +1,15 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/editprofile.js"></script>
 
 <h1>Edit Profile</h1>
 
-   	<form method="post">
+   	<form ref='uploadForm'  id='uploadForm' action="/editprofile" method='post' encType="multipart/form-data">
+
+   		<div>
+		  <p>Select New Profile Picture<br>
+		 	<input type="file" id = "myFile" name = "imagefile" accept="image/*" onchange="loadFile(this)"><br>
+			<img name = 'profilePic' id="profilePic" style="display: none;"/>
+		  </P>
+		</div>
 
    		<div>
 		  <p>Name<br>
@@ -20,3 +26,17 @@
 
 <a href="/logout">Logout</a>
 
+<script>
+    var loadFile = function(input) {
+   		 if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var output = document.getElementById('profilePic');
+   					output.src = e.target.result;
+   					var binarystr = e.target.result;
+   					output.style.display = "block";
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+  	};
+</script>

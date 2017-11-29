@@ -63,10 +63,8 @@ app.get('/feed', function (req, res) {
 });
 
 app.post('/feed', function (req, res) {
-  if (req.body.act == 'updateProfile') {
-    res.redirect('/editProfile');
-  } else if (req.body.act == 'newPost') {
-    res.redirect('/newpost');
+  if (req.body.act == 'myProfile') {
+    res.redirect('/myprofile');
   }
 });
 
@@ -77,6 +75,10 @@ app.use('/', editProfileRouter);
 // new post router
 var newPostRouter = require('./routes/newpost');
 app.use('/', newPostRouter);
+
+// my profile router
+var myProfileRouter = require('./routes/myprofile');
+app.use('/', myProfileRouter);
 
 app.get('/logout', function(req, res) {
   req.session.username = '';

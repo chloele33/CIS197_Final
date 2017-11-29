@@ -16,7 +16,24 @@ form {
   text-align: center;
 }
 
-img {
+#profilePic {
+    object-fit: cover;
+    width: 10em;
+    height: 10em;
+    border-radius: 5em;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    display: block;
+    margin: 0 auto;
+}
+
+#myBio {
+  text-align: center;
+}
+
+#output {
 	height: 20em;
 }
  
@@ -62,8 +79,4 @@ img {
     -webkit-pointer-events: none;
     -moz-pointer-events: none;
     pointer-events: none;
-}
-
-p.binary {
-	visibility: hidden;
 }
