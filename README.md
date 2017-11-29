@@ -30,7 +30,6 @@ Keep a profile:
 Features Implemented: 
 -   Signup
 -	Login
--	Profile Pic with bio and profile picture 
-- 	Edit Profile 
-- 	Upload a post to database, includes rating, caption, date, image
--   Upload Profile Pic
+-	Profile page with bio and profile picture from data base
+- 	Edit Profile, upload Profile Pic
+- 	Upload a post to database, includes rating, caption, date, image data
