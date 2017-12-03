@@ -33,8 +33,29 @@ form {
   text-align: center;
 }
 
+#fullname {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+#username {
+  text-align: center;
+  font-weight: bold;
+  font-size: 3em;
+}
+
 #output {
+  object-fit: cover;
 	height: 20em;
+  width: 20em;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  display: block;
+  margin: 0 auto;
+
 }
  
  

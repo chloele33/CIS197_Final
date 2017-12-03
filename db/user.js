@@ -62,25 +62,23 @@ userSchema.pre('save', function(next) {
 // bad practice, becasue actually should check if username exists in the database. 
 // this also throws an error, but we should throw an error intentionally ourselves. 
 userSchema.statics.addUser = function(username, password, name, email, cb) {
-  // User.find({username: username, email: email}, function(err, docs) {
-  //   if (docs.length != 0){
-  //     if(docs[0].username) {
-  //       cb('Username exists already',null);
-  //     } else {
-  //       cb('Email exists already',null);
-  //     }
-  //   } else {
-  //     if (err) {
-  //       return cb(err);
-  //     }
-  //     var newUser = new this({ username: username, password: password, name: name, email: email});
-  //     newUser.save(cb);
-  //   }
-  // });
-  var newUser = new this({ username: username, password: password, fullname: name, email: email});
-  newUser.profilePic.data = fs.readFileSync('defaultPic.png');
-  newUser.profilePic.contentType = 'image/png';
-  newUser.save(cb);
+  User.findOne({username: username}, function (err, docs) {
+    if (docs) {
+      cb(' Username Exists');
+    } else {
+      User.findOne({email: email}, function (error, user) {
+        if (user) {
+          cb(' Email Exists');
+        } else {
+          // successfully add
+            var newUser = new User({ username: username, password: password, fullname: name, email: email});
+            newUser.profilePic.data = fs.readFileSync('defaultPic.png');
+            newUser.profilePic.contentType = 'image/png';
+            newUser.save(cb);
+        }
+      });
+    }
+  });
 }
 
 userSchema.statics.checkIfLegit = function(username, password, cb) {

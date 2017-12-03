@@ -6,13 +6,15 @@
 	</head>
 
 	<body>
-		<h1 class="title">My Profile</h1>
-    <img name = 'profilePic' id="profilePic" src = '<%= profilePicSrc %>'/>
+    <p id = "username"> <%= username %> </p>
+    <img name = 'profilePic' id="profilePic" src = '<%= profilePicSrc %>'/>    
+    <p id = "fullname"> <%= fullname %> </p>
     <p id = "myBio"> <%= bio %> </p>
     <form method="post">
       <p><button type="submit" name = "act" value = "updateProfile">Update Profile</button></p>
       <p><button type="submit" name = "act" value = "newPost">Upload New Post</button></p>
     </form>
+
   </body>
 </html>
 

@@ -7,7 +7,7 @@
    		<div>
 		  <p>Select Photo<br>
 		 	<input type="file" id = "myFile" name = "imagefile" accept="image/*" onchange="loadFile(this)"><br>
-			<img name = 'img' id="output"/>
+			<img name = 'img' id="output" style="display: none;"/>
 		  </P>
 		</div>
 
@@ -46,16 +46,16 @@
 
 <script>
     var loadFile = function(input) {
-   		 if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var output = document.getElementById('output');
-   					output.src = e.target.result;
-   					var binarystr = e.target.result;
-   					//document.getElementById("binary").innerHTML = binarystr;
-                };
-                reader.readAsDataURL(input.files[0]);
-                document.getElementById('shareBtn').disabled = false;
-            }
+   		if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+            	var output = document.getElementById('output');
+				output.src = e.target.result;
+				var binarystr = e.target.result;
+				output.style.display = "block";
+            };
+            reader.readAsDataURL(input.files[0]);
+            document.getElementById('shareBtn').disabled = false;
+        }
   	};
 </script>

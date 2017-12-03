@@ -24,7 +24,9 @@ router.get('/myprofile', function (req, res) {
     res.send('You tried to access a protected page');
   } else {
     User.getBio(req.session.username, function(bio) {
-      res.render('myprofile', {profilePicSrc: '/profilePic', bio: bio});
+      User.getFullname(req.session.username, function(fullname) {
+        res.render('myprofile', {profilePicSrc: '/profilePic', bio: bio, username: req.session.username, fullname: fullname});
+      });
     });
   }
 });

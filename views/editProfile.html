@@ -29,14 +29,14 @@
 <script>
     var loadFile = function(input) {
    		 if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var output = document.getElementById('profilePic');
-   					output.src = e.target.result;
-   					var binarystr = e.target.result;
-   					output.style.display = "block";
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var output = document.getElementById('profilePic');
+         	output.src = e.target.result;
+         	var binarystr = e.target.result;
+         	output.style.display = "block";
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
   	};
 </script>
