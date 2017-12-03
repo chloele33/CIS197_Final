@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var data = require('../db/user.js');
 var User = data.user;
+var Post = data.post;
 
 
 
@@ -19,13 +20,36 @@ router.get('/profilePic', function (req, res) {
   }
 });
 
+//routher to get posts 
+router.get('/post/:postID', function (req, res) {
+  if (!req.session.username || req.session.username === '') {
+    res.send('You tried to access a protected page');
+  } else {
+    Post.findById(req.params.postID, function(err, post) {
+        if (err) return next(err);
+        res.contentType(post.img.contentType);
+        res.send(post.img.data);
+    }); 
+  }
+});
+
 router.get('/myprofile', function (req, res) {
   if (!req.session.username || req.session.username === '') {
     res.send('You tried to access a protected page');
   } else {
-    User.getBio(req.session.username, function(bio) {
-      User.getFullname(req.session.username, function(fullname) {
-        res.render('myprofile', {profilePicSrc: '/profilePic', bio: bio, username: req.session.username, fullname: fullname});
+    User.getBio(req.session.username, function (bio) {
+      User.getFullname(req.session.username, function (fullname) {
+        User.getPosts(req.session.username, function (postIDArray) {
+          // turn array into the format of /post/postID
+          for (var i = 0; i < postIDArray.length; i++) {
+            postIDArray[i] = '/post/' + postIDArray[i];
+          }
+          res.render('myprofile', {posts: postIDArray, 
+                                    profilePicSrc: '/profilePic', 
+                                    bio: bio, 
+                                    username: req.session.username, 
+                                    fullname: fullname});
+        });
       });
     });
   }

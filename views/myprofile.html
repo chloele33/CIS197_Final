@@ -6,14 +6,31 @@
 	</head>
 
 	<body>
+
+    <div class="nav">
+      <ul>
+        <li class="feed"><a href="#">Feed</a></li>
+        <li class="myprofile"><a class="active" href="#">Profile</a></li>
+        <li class="discover"><a href="#">Discover</a></li>
+      </ul>
+    </div>
+
+
     <p id = "username"> <%= username %> </p>
     <img name = 'profilePic' id="profilePic" src = '<%= profilePicSrc %>'/>    
     <p id = "fullname"> <%= fullname %> </p>
     <p id = "myBio"> <%= bio %> </p>
     <form method="post">
-      <p><button type="submit" name = "act" value = "updateProfile">Update Profile</button></p>
-      <p><button type="submit" name = "act" value = "newPost">Upload New Post</button></p>
+      <p><button type="submit" name = "act" value = "updateProfile">Edit Profile</button>
+      <button type="submit" name = "act" value = "newPost">Upload New Post</button></p>
     </form>
+    <p>
+      <% for(var i = posts.length - 1; i >= 0; i--) {%>
+        <div class = "responsive">
+          <img name = 'postPic' id="postPic" src = '<%= posts[i] %>' />
+        </div>
+      <% } %>
+    </p>
 
   </body>
 </html>

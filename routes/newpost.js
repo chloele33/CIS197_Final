@@ -12,11 +12,6 @@ router.get('/newpost', function (req, res) {
   } else {
     res.render('newpost');
   }
-  // User.getFullname(req.session.username, function(fullname) {
-  //   User.getBio(req.session.username, function(bio) {
-  //      res.render('editProfile', {fullname: fullname, bio: bio});
-  //   });
-  // });
 });
 
 router.post('/newpost', function (req, res) {
@@ -37,7 +32,7 @@ router.post('/newpost', function (req, res) {
 	  if (err) {
         res.send('error' + err);
       } else {
-        res.redirect('feed');
+        res.redirect('myprofile');
       }
     });
   }

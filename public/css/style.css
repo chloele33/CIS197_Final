@@ -16,6 +16,11 @@ form {
   text-align: center;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #profilePic {
     object-fit: cover;
     width: 10em;
@@ -27,6 +32,23 @@ form {
     background-position: 50% 50%;
     display: block;
     margin: 0 auto;
+}
+
+
+#postPic {
+    object-fit: cover;
+    width: 30.6vw;
+    height: 30.6vw;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    display: block;
+    margin: 1vw 1vw;
+}
+
+.responsive {
+    float: left;
 }
 
 #myBio {
@@ -47,7 +69,7 @@ form {
 
 #output {
   object-fit: cover;
-	height: 20em;
+	height: auto;
   width: 20em;
   background-size: cover;
   background-position: center center;
@@ -100,4 +122,62 @@ form {
     -webkit-pointer-events: none;
     -moz-pointer-events: none;
     pointer-events: none;
+}
+ 
+.nav ul {
+  list-style: none;
+  background-color: #ffccb3;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+.nav li {
+  font: 1em "Arial Rounded MT", "Optima", "Arial";
+  line-height: 40px;
+  height: 40px;
+  border-bottom: 1px solid #fff;
+}
+ 
+.nav a {
+  text-decoration: none;
+  color: #fff;
+  display: block;
+  transition: .5s background-color;
+}
+ 
+.nav a:hover {
+  background-color: #ff5500;
+}
+ 
+.nav a.active {
+  background-color: #fff;
+  color: #444;
+  cursor: default;
+}
+ 
+@media screen and (min-width: 600px) {
+  .nav li {
+    width: 120px;
+    border-bottom: none;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1.4em;
+  }
+ 
+  /* Option 1 - Display Inline */
+  .nav li {
+    display: inline-block;
+    margin-right: -4px;
+  }
+
+}
+
+
+@media screen and (max-width: 600px) {
+
+  #postPic {
+    width: 46vw;
+    height: 46vw;
+  }
+
 }

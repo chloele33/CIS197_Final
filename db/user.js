@@ -131,6 +131,12 @@ userSchema.statics.getBio = function (username, cb) {
   });
 }
 
+userSchema.statics.getPosts = function (username, cb) {
+  User.findOne({username: username}, function(err, user) {
+    return cb(user.posts);
+  });
+}
+
 // postSchema statics/methods
 postSchema.statics.addPost = function (username, imagefile, rating, caption, cb) {
   User.findOne({username: username}, function(err, user) {
