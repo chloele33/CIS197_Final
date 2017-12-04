@@ -4,7 +4,7 @@ html {
 
 h1 {
   cursor: default;
-  font: 3em "Arial Rounded MT Bold", "Optima", "Arial";
+  font: 2em "Arial Rounded MT Bold", "Optima", "Arial";
   text-align: center;
 }
 
@@ -21,6 +21,24 @@ body {
   padding: 0;
 }
 
+button {
+  border-radius: 5px;
+  background-color: #ffccb3;
+  border: none;
+  color: #777;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: .5s background-color;
+  transition:color 0.5s ease-in-out;
+}
+
+button:hover{
+  background-color: #777;
+  color: white;
+}
+
 #profilePic {
     object-fit: cover;
     width: 10em;
@@ -34,6 +52,19 @@ body {
     margin: 0 auto;
 }
 
+
+#searchBox{
+  width: 50vw;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background: url('searchicon.png') left no-repeat;
+  background-size: 20px auto;
+  background-position: 10px 10px; 
+  padding: 12px 20px 12px 40px;
+  margin: 50px 25vw auto 25vw;
+}
 
 #postPic {
     object-fit: cover;
@@ -56,15 +87,13 @@ body {
 }
 
 #fullname {
+  font: 1em "Arial Rounded MT Bold", "Optima", "Arial"; 
   text-align: center;
-  font-weight: bold;
-  font-size: 1em;
 }
 
 #username {
+  font: 3em "Arial Rounded MT Bold", "Optima", "Arial"; 
   text-align: center;
-  font-weight: bold;
-  font-size: 3em;
 }
 
 #output {
@@ -152,7 +181,38 @@ body {
 .nav a.active {
   background-color: #fff;
   color: #444;
-  cursor: default;
+}
+
+.dropdown {
+    position: relative;
+    display: block;
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
  
 @media screen and (min-width: 600px) {
@@ -170,10 +230,15 @@ body {
     margin-right: -4px;
   }
 
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
 }
 
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
 
   #postPic {
     width: 46vw;
@@ -181,3 +246,5 @@ body {
   }
 
 }
+
+

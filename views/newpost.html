@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
-
+<title> Upload Post </title>
 <h1>Upload New Post</h1>
 
    	<form ref='uploadForm'  id='uploadForm'  action="/newpost" method='post' encType="multipart/form-data">
@@ -38,7 +38,7 @@
 		  <p class = "binary" id = "binary" name="binary"> </p>
 		</div>
 
-		<p><button type="submit" id = "shareBtn" disabled = true>Share Post</button></p>
+		<p><button type="submit" id = "shareBtn" disabled = true style = "pointer-events: none;">Share Post</button></p>
 
 	</form>
 
@@ -56,6 +56,7 @@
             };
             reader.readAsDataURL(input.files[0]);
             document.getElementById('shareBtn').disabled = false;
+            document.getElementById('shareBtn').style.pointerEvents = "auto";
         }
   	};
 </script>

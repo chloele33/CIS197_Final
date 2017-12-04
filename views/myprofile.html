@@ -10,8 +10,21 @@
     <div class="nav">
       <ul>
         <li class="feed"><a href="#">Feed</a></li>
-        <li class="myprofile"><a class="active" href="#">Profile</a></li>
-        <li class="discover"><a href="#">Discover</a></li>
+        <div class = "dropdown">
+          <li class="myprofile"><a class="active" href="#">Profile</a></li>
+          <div class="dropdown-content">
+            <a href="#">My Foods</a>
+            <a href="/logout">Logout</a>
+          </div>
+        </div>
+        <div class = "dropdown">
+          <li class="discover"><a href="#">Discover</a></li>
+          <div class="dropdown-content">
+            <a href="/searchuser">Foodies</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
       </ul>
     </div>
 
@@ -27,7 +40,7 @@
     <p>
       <% for(var i = posts.length - 1; i >= 0; i--) {%>
         <div class = "responsive">
-          <img name = 'postPic' id="postPic" src = '<%= posts[i] %>' />
+          <img name = 'postPic' id="postPic" src = '<%= posts[i] %>' value = '<%= postID[i]%>'/>
         </div>
       <% } %>
     </p>
