@@ -8,7 +8,7 @@ var Post = data.post;
 // Implement the routes for edit profile page
 router.get('/newpost', function (req, res) {
   if (!req.session.username || req.session.username === '') {
-    res.send('You tried to access a protected page');
+    res.redirect('login');
   } else {
     res.render('newpost');
   }

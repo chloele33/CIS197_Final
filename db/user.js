@@ -10,7 +10,7 @@ var bcrypt = require('bcrypt');
 var userSchema = new Schema({
   username: { type: String, lowercase: true, required: true, unique: true },
   password: { type: String, required: true },
-  fullname: { type: String, required: true},
+  fullname: { type: String, required: true },
   email: {type: String, lowercase: true, required: true, unique: true, match: [/\S+@\S+\.\S+/, 'Invalid Email. Valid email example: hello@foodiegram.com']},
   bio: { type: String, default: ''},
   posts: [{type: Schema.ObjectId, ref: 'Post'}],

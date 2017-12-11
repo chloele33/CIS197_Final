@@ -7,11 +7,15 @@ var User = data.user;
 
 // Implement the routes for login page
 router.get('/login', function (req, res) {
-  res.render('login');
+  if (!req.session.username || req.session.username === '') {
+     res.render('login');
+   } else {
+    res.redirect('myprofile');
+   }
 });
 
 router.post('/login', function (req, res) {
-  username = req.body.username;
+  username = req.body.username.toLowerCase();
   password = req.body.password;
   User.checkIfLegit(username, password, function(err, isRight) {
     if (err) {

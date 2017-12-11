@@ -80,6 +80,10 @@ app.use('/', newPostRouter);
 var myProfileRouter = require('./routes/myprofile');
 app.use('/', myProfileRouter);
 
+// my profile router
+var userProfileRouter = require('./routes/othersprofile');
+app.use('/', userProfileRouter);
+
 // search user router
 var searchUserRouter = require('./routes/searchuser');
 app.use('/', searchUserRouter);
@@ -87,7 +91,8 @@ app.use('/', searchUserRouter);
 // logout 
 app.get('/logout', function(req, res) {
   req.session.username = '';
-  res.render('logout');
+  //res.render('logout');
+  res.redirect('login');
 });
 
 // connect server

@@ -10,9 +10,22 @@ var Post = data.post;
 // get requests for profile picture
 router.get('/profilePic', function (req, res) {
   if (!req.session.username || req.session.username === '') {
-    res.send('You tried to access a protected page');
+    res.redirect('login');
   } else {
     User.findOne({username: req.session.username}, function(err, user) {
+        if (err) return next(err);
+        res.contentType(user.profilePic.contentType);
+        res.send(user.profilePic.data);
+    }); 
+  }
+});
+
+// get requests for profile picture
+router.get('/profilePic/:userID', function (req, res) {
+  if (!req.session.username || req.session.username === '') {
+    res.redirect('login');
+  } else {
+    User.findById(req.params.userID, function(err, user) {
         if (err) return next(err);
         res.contentType(user.profilePic.contentType);
         res.send(user.profilePic.data);
@@ -23,7 +36,7 @@ router.get('/profilePic', function (req, res) {
 //routher to get posts 
 router.get('/post/:postID', function (req, res) {
   if (!req.session.username || req.session.username === '') {
-    res.send('You tried to access a protected page');
+    res.redirect('login');
   } else {
     Post.findById(req.params.postID, function(err, post) {
         if (err) return next(err);
@@ -35,7 +48,7 @@ router.get('/post/:postID', function (req, res) {
 
 router.get('/myprofile', function (req, res) {
   if (!req.session.username || req.session.username === '') {
-    res.send('You tried to access a protected page');
+    res.redirect('login');
   } else {
     User.getBio(req.session.username, function (bio) {
       User.getFullname(req.session.username, function (fullname) {
