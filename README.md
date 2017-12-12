@@ -25,7 +25,7 @@ Keep a profile:
 -	Have a list of favorite posts
 -	(dream feature) Have a list of restaurants they have visited/posted photos from (can view visually through a map)
 -	(dream feature) Can select to view profile arranged by either ratings or time 
--	Delete/add posts
+-	add posts
 
 Features Implemented: 
 -   Signup
@@ -33,3 +33,8 @@ Features Implemented:
 -	Profile page with bio and profile picture from data base
 - 	Edit Profile, upload Profile Pic
 - 	Upload a post to database, includes rating, caption, date, image data
+- 	Like, comment, and favorite a post
+- 	Feed shows the accounts' posts that you are following
+-	Can maintain a favorite profile
+- 	Can search users, follow users, and track users' followers and followings
+- 	Can click on post to show picture details  
