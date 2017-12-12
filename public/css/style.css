@@ -177,6 +177,7 @@ button:hover{
   margin-left: 30vw;
 }
 
+
 #output {
   object-fit: cover;
 	height: auto;
@@ -332,6 +333,88 @@ button:hover{
     height: 46vw;
   }
 
+}
+
+#postpage {
+  width: 55vw;
+  height: 55vw;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+
+.heartbutton {
+  position: absolute;
+  width: 3vw;
+  height: 1.5vw;
+  margin-top: 5vw;
+  margin-left: 23vw;
+  border-radius: 5px;
+  background: none;
+  cursor: pointer;
+  transition: background 0.5s ease;
+}
+
+.heartbutton:hover{
+
+}
+
+#heart {
+    width: 1.8vw;
+    height: 1.3vw;
+    transition: background 0.5s ease;
+}
+.heartbutton:before,
+.heartbutton:after {
+    transition: background 0.5s ease;
+    position: absolute;
+    content: "";
+    left: 4vw;
+    top: 0;
+    width: 4vw;
+    height: 6.4vw;
+    background: dimgrey;
+    border-radius: 50px 50px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+.heartbutton:after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin :100% 100%;
+}
+
+#numlikes { 
+  font: 3vw "Arial Rounded MT Bold", "Optima", "Arial"; 
+  position: absolute;
+  margin-top: 7vw;
+  margin-left: 33vw;
+  color: #888;
+}
+
+.like:before,
+.like:after {
+  transition: background 0.5s ease;
+    position: absolute;
+    content: "";
+    left: 4vw;
+    top: 0;
+    width: 4vw;
+    height: 6.4vw;
+    background: #ff5500;
+    border-radius: 50px 50px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+.like:after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin :100% 100%;
 }
 
 

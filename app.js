@@ -80,9 +80,13 @@ app.use('/', newPostRouter);
 var myProfileRouter = require('./routes/myprofile');
 app.use('/', myProfileRouter);
 
-// my profile router
+// others profile router
 var userProfileRouter = require('./routes/othersprofile');
 app.use('/', userProfileRouter);
+
+// postpic router
+var postpicRouter = require('./routes/postpic');
+app.use('/', postpicRouter);
 
 // search user router
 var searchUserRouter = require('./routes/searchuser');

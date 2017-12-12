@@ -29,14 +29,17 @@ router.get('/userprofile/:userID', function (req, res) {
                       if (myFollowingArray.indexOf(req.params.userID) > -1) {
                           // postValue stores the ID of the post and inserts as value into html
                           // so we can track the post in the database 
+                          var postPicArray = [];
                           var postValue = [];
                           // turn array into the format of /post/postID
                           for (var i = 0; i < postIDArray.length; i++) {
                             postValue = postIDArray[i];
+                            postPicArray[i] = '/postPic/' + postIDArray[i];
                             postIDArray[i] = '/post/' + postIDArray[i];
                           }
                           res.render('othersprofile', {postID: postValue,
                                                     posts: postIDArray, 
+                                                    postPic: postPicArray,
                                                     profilePicSrc: '/profilePic/'+req.params.userID, 
                                                     bio: bio, 
                                                     username: user.username, 
@@ -48,13 +51,16 @@ router.get('/userprofile/:userID', function (req, res) {
                         // postValue stores the ID of the post and inserts as value into html
                         // so we can track the post in the database 
                         var postValue = [];
+                        var postPicArray = [];
                         // turn array into the format of /post/postID
                         for (var i = 0; i < postIDArray.length; i++) {
                           postValue = postIDArray[i];
+                          postPicArray[i] = '/postPic/' + postIDArray[i];
                           postIDArray[i] = '/post/' + postIDArray[i];
                         }
                         res.render('othersprofile', {postID: postValue,
                                                   posts: postIDArray, 
+                                                  postPic: postPicArray,
                                                   profilePicSrc: '/profilePic/'+req.params.userID, 
                                                   bio: bio, 
                                                   username: user.username,

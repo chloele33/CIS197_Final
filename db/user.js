@@ -199,6 +199,32 @@ postSchema.statics.addPost = function (username, imagefile, rating, caption, cb)
   });
 }
 
+postSchema.statics.getLikers = function (postID, cb) {
+  Post.findById(postID, function (err, post) {
+    return cb(post.likes);
+  });
+}
+
+postSchema.statics.like = function (userId, postID, cb) {
+  User.findById(userId, function (err, me) {
+    Post.findById(postID, function (eror, post) {
+      post.likes.push(me);
+      post.save();
+      cb(null);
+    });
+  });
+}
+
+postSchema.statics.unlike = function (userId, postID, cb) {
+  User.findById(userId, function (err, me) {
+    Post.findById(postID, function (eror, post) {
+      post.likes.pull(me);
+      post.save();
+      cb(null);
+    });
+  });
+}
+
 // save models
 var User = mongoose.model('User', userSchema);
 var Place = mongoose.model('Place', placeSchema);

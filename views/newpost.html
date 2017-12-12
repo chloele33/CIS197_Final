@@ -1,5 +1,25 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
 <title> Upload Post </title>
+ <div class="nav">
+      <ul>
+        <li class="feed"><a href="#">Feed</a></li>
+        <div class = "dropdown">
+          <li class="myprofile"><a class="active" href="#">Profile</a></li>
+          <div class="dropdown-content">
+            <a href="/myprofile">My Foods</a>
+            <a href="/logout">Logout</a>
+          </div>
+        </div>
+        <div class = "dropdown">
+          <li class="discover"><a href="#">Discover</a></li>
+          <div class="dropdown-content">
+            <a href="/searchuser">Foodies</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
+      </ul>
+    </div>
 <h1>Upload New Post</h1>
 
    	<form ref='uploadForm'  id='uploadForm'  action="/newpost" method='post' encType="multipart/form-data">
@@ -41,8 +61,6 @@
 		<p><button type="submit" id = "shareBtn" disabled = true style = "pointer-events: none;">Share Post</button></p>
 
 	</form>
-
-<a href="/logout">Logout</a>
 
 <script>
     var loadFile = function(input) {
