@@ -26,7 +26,6 @@ router.get('/userprofile/:userID', function (req, res) {
                     User.getFollowing(req.session.username, function (myFollowingArray) {
                       // checks if the button should say "unfollow" or "follow"
                       // if currently following
-                      console.log(myFollowingArray);
                       if (myFollowingArray.indexOf(req.params.userID) > -1) {
                           // postValue stores the ID of the post and inserts as value into html
                           // so we can track the post in the database 
@@ -111,5 +110,63 @@ router.post('/othersprofile/follow', function (req, res) {
     });
   });
 });
+
+router.get('/following/:username', function (req, res) {
+  if (!req.session.username || req.session.username === '') {
+    res.redirect('/login');
+  } else {
+    User.getFollowing(req.params.username, function (followingArray) {
+      User.find({'_id': {$in: followingArray}}, function (err, followingData) {
+        var usernameArray = [];
+        var fullnameArray = [];
+        var profilepicArray = [];
+        var profilepageArray = [];
+        for (var i = 0; i < followingData.length; i++) {
+          usernameArray[i] = followingData[i].username;
+          fullnameArray[i] = followingData[i].fullname;
+          profilepicArray[i] = '/profilePic/' + followingData[i]._id;
+          profilepageArray[i] = '/userprofile/' + followingData[i]._id;
+        }
+
+        res.render('followers', {username: req.params.username, 
+                        follow: "follows:", 
+                        userprofile: profilepageArray,
+                        userpic: profilepicArray,
+                        allusername: usernameArray, 
+                        fullname: fullnameArray});
+      });
+    });
+  }
+});
+
+router.get('/followers/:username', function (req, res) {
+  if (!req.session.username || req.session.username === '') {
+    res.redirect('/login');
+  } else {
+    User.getFollowers(req.params.username, function (followerArray) {
+      User.find({'_id': {$in: followerArray}}, function (err, followerData) {
+        var usernameArray = [];
+        var fullnameArray = [];
+        var profilepicArray = [];
+        var profilepageArray = [];
+        for (var i = 0; i < followerData.length; i++) {
+          usernameArray[i] = followerData[i].username;
+          fullnameArray[i] = followerData[i].fullname;
+          profilepicArray[i] = '/profilePic/' + followerData[i]._id;
+          profilepageArray[i] = '/userprofile/' + followerData[i]._id;
+        }
+
+        res.render('followers', {username: req.params.username, 
+                        follow: "is followed by:", 
+                        userprofile: profilepageArray,
+                        userpic: profilepicArray,
+                        allusername: usernameArray, 
+                        fullname: fullnameArray});
+      });
+    });
+  }
+});
+
+
 
 module.exports = router;

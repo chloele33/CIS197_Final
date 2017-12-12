@@ -26,6 +26,15 @@ $(document).ready(function() {
     	});
 	});
 
+	// $('body').on('click', '#followingStatus', function() {
+	// 	$.ajax({
+ //      		type: 'GET',
+ //     		url: '/following',
+ //      		data: { 
+ //      			username: $('#username').text()
+ //      		}
+ //    	});
+	// });
 	// function initialFollowAjax() {
 	// 	var self = $('#followBtn');
 	//     $.ajax({

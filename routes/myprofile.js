@@ -53,20 +53,26 @@ router.get('/myprofile', function (req, res) {
     User.getBio(req.session.username, function (bio) {
       User.getFullname(req.session.username, function (fullname) {
         User.getPosts(req.session.username, function (postIDArray) {
-          // postValue stores the ID of the post and inserts as value into html
-          // so we can track the post in the database 
-          var postValue = [];
-          // turn array into the format of /post/postID
-          for (var i = 0; i < postIDArray.length; i++) {
-            postValue = postIDArray[i];
-            postIDArray[i] = '/post/' + postIDArray[i];
-          }
-          res.render('myprofile', {postID: postValue,
-                                    posts: postIDArray, 
-                                    profilePicSrc: '/profilePic', 
-                                    bio: bio, 
-                                    username: req.session.username, 
-                                    fullname: fullname});
+          User.getFollowing(req.session.username, function (followingArray) {
+            User.getFollowers(req.session.username, function (followerArray) {
+                // postValue stores the ID of the post and inserts as value into html
+                // so we can track the post in the database 
+                var postValue = [];
+                // turn array into the format of /post/postID
+                for (var i = 0; i < postIDArray.length; i++) {
+                  postValue = postIDArray[i];
+                  postIDArray[i] = '/post/' + postIDArray[i];
+                }
+                res.render('myprofile', {postID: postValue,
+                                          posts: postIDArray, 
+                                          profilePicSrc: '/profilePic', 
+                                          bio: bio, 
+                                          username: req.session.username, 
+                                          fullname: fullname,
+                                          following: followingArray.length,
+                                          followers: followerArray.length});
+            });
+          });
         });
       });
     });

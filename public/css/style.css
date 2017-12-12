@@ -129,7 +129,13 @@ button:hover{
     margin: 1vw 1vw;
 }
 
-#followStatus {
+#followingStatus {
+  font: 1em "Arial Rounded MT Bold", "Optima", "Arial"; 
+  text-align: center;
+  margin: 10px 10px;
+}
+
+#followerStatus {
   font: 1em "Arial Rounded MT Bold", "Optima", "Arial"; 
   text-align: center;
   margin: 10px 10px;

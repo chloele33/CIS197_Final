@@ -149,6 +149,16 @@ userSchema.statics.getFollowing= function (username, cb) {
   });
 }
 
+userSchema.statics.getUsernameArray= function (userIdArray, cb) {
+  var returnArray = [];
+  for (var i = 0; i < userIdArray; i++) {
+    User.findById(userIdArray[i], function (err, user) {
+      returnArray[i] = user.username;
+      return cb(returnArray);
+    });
+  }
+}
+
 userSchema.statics.unfollow = function (myUserID, userID, cb) {
   // User.update({_id: myUserID}, { "$pull": { "following": { "User": userID } }}, false, true);
   // User.update({_id: userID}, { "$pull": { "followers": { "User": myUserID } }}, false, true);
