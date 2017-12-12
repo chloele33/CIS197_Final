@@ -25,28 +25,4 @@ $(document).ready(function() {
      	 	}
     	});
 	});
-
-	// $('body').on('click', '#followingStatus', function() {
-	// 	$.ajax({
- //      		type: 'GET',
- //     		url: '/following',
- //      		data: { 
- //      			username: $('#username').text()
- //      		}
- //    	});
-	// });
-	// function initialFollowAjax() {
-	// 	var self = $('#followBtn');
-	//     $.ajax({
-	//   		type: 'POST',
-	//  		url: '/othersprofile/isFollow',
-	//   		data: { 
-	//   			username: $('#username').text()
-	//   		},
-	//   		success: function(data) {
-	//    			var newText = self.text() === 'favorite this' ? 'unfavorite this' : 'favorite this'
-	//     		self.text("hi");
-	//  	 	}
-	//     });
- //  	}
 });

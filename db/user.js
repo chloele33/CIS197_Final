@@ -40,6 +40,7 @@ var placeSchema = new Schema({
 var commentSchema = new Schema({
   content: {type: String},
   author : { type: Schema.ObjectId, ref: 'User' }, 
+  username: {type: String, lowercase: true},
   created_at: Date
 });
 
@@ -251,6 +252,27 @@ postSchema.statics.unlike = function (userId, postID, cb) {
   });
 }
 
+postSchema.statics.getComments = function (postID, cb) {
+  Post.findById(postID, function (err, post) {
+    return cb(post.comments);
+  });
+}
+
+//comment functions
+commentSchema.statics.addComment = function (username, postID, commentContent, cb) {
+  Post.findById(postID, function (err, post) {
+    User.findOne({username: username}, function (err, user) {
+      var newComment = new Comment({author: user._id, content: commentContent, username: username});
+      newComment.created_at = new Date();
+      newComment.save();
+      post.comments.push(newComment);
+      post.save();
+      cb(null);
+    });
+  });
+}
+
+
 // save models
 var User = mongoose.model('User', userSchema);
 var Place = mongoose.model('Place', placeSchema);
@@ -258,4 +280,4 @@ var Post = mongoose.model('Post', postSchema);
 var Comment = mongoose.model('Comment', commentSchema);
 
 
-module.exports = {user: User, post: Post};
+module.exports = {user: User, post: Post, comment: Comment};

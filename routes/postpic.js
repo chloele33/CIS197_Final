@@ -3,6 +3,7 @@ var router = express.Router();
 var data = require('../db/user.js');
 var User = data.user;
 var Post = data.post;
+var Comment = data.comment;
 
 
 router.get('/postpic/:postID', function (req, res) {
@@ -15,57 +16,108 @@ router.get('/postpic/:postID', function (req, res) {
           User.getFavorites(req.session.username, function (favoriteArray) {
             User.findById(post._creater, function (err, creater) {
               var rate = Number(post.rating);
-              var date = new Date(post.created_at).toDateString();
+              var date = new Date(post.created_at);
+              date = date.toDateString() + ' ' + date.getHours() +':' + date.getMinutes()
               var caption = post.caption;
-              //already liked
-              if (likerArray.indexOf(user._id) > -1) {
-                //already favorited 
-                if (favoriteArray.indexOf(req.params.postID) > -1) {
-                  res.render('otherspost', {username: creater.username, 
-                    postPicSrc: "/post/"+req.params.postID,
-                    likenum: post.likes.length, 
-                    postID: req.params.postID, 
-                    heartBtnClass: 'heartbutton like',
-                    caption: caption,
-                    date: date,
-                    rate: rate, 
-                    favorite: 'Remove From Fravorites'});
-
+              User.findById(post._creater, function (err, creater) {
+                if (creater.username == req.session.username) {
+                  res.redirect('/mypostpic/'+req.params.postID);
                 } else {
-                  res.render('otherspost', {username: creater.username, 
-                    postPicSrc: "/post/"+req.params.postID,
-                    likenum: post.likes.length, 
-                    postID: req.params.postID, 
-                    heartBtnClass: 'heartbutton like',
-                    caption: caption,
-                    date: date,
-                    rate: rate, 
-                    favorite: 'Save To Favorites'});
+                  Post.getComments(req.params.postID, function (commentsIDArray) {
+                    Comment.find({'_id': {$in: commentsIDArray}}, function (err, commentData) {
+                      var commentUsernameArray = [];
+                      var commentProfilePicArray = [];
+                      var commentContentArray = [];
+                      var commentUserProfileArray = [];
+                      var commentDateArray = [];
+                      var commentStart = commentData.length - 10;
+                      if (commentStart < 0) {
+                        commentStart = 0;
+                      }
+                      for (var i = commentStart; i < commentData.length; i++) {
+                        commentUsernameArray[i - commentStart] = commentData[i].username;
+                        commentContentArray[i - commentStart] = commentData[i].content;
+                        commentProfilePicArray[i - commentStart] = '/profilePic/' + commentData[i - commentStart].author;
+                        commentUserProfileArray[i - commentStart] = '/userprofile/' + commentData[i - commentStart].author;
+                        var comDate = new Date(commentData[i - commentStart].created_at);
+                        commentDateArray[i - commentStart] = comDate.toDateString() + ' ' + comDate.getHours() +':' + comDate.getMinutes();
+                      }
+                      //already liked
+                      if (likerArray.indexOf(user._id) > -1) {
+                        //already favorited 
+                        if (favoriteArray.indexOf(req.params.postID) > -1) {
+                          res.render('otherspost', {username: creater.username, 
+                            postPicSrc: "/post/"+req.params.postID,
+                            likenum: post.likes.length, 
+                            postID: req.params.postID, 
+                            heartBtnClass: 'heartbutton like',
+                            caption: caption,
+                            date: date,
+                            rate: rate, 
+                            favorite: 'Remove From Fravorites',
+                            commentUserProfile: commentUserProfileArray,
+                            commentProfilePic: commentProfilePicArray,
+                            commentCreater: commentUsernameArray,
+                            commentDate: commentDateArray, 
+                            commentContent: commentContentArray,
+                            allcommentsrequest: '/allcomments/'+req.params.postID });
+                        } else {
+                          res.render('otherspost', {username: creater.username, 
+                            postPicSrc: "/post/"+req.params.postID,
+                            likenum: post.likes.length, 
+                            postID: req.params.postID, 
+                            heartBtnClass: 'heartbutton like',
+                            caption: caption,
+                            date: date,
+                            rate: rate, 
+                            favorite: 'Save To Favorites', 
+                            commentUserProfile: commentUserProfileArray,
+                            commentProfilePic: commentProfilePicArray,
+                            commentCreater: commentUsernameArray,
+                            commentDate: commentDateArray, 
+                            commentContent: commentContentArray,
+                            allcommentsrequest: '/allcomments/'+req.params.postID });
+                        }
+                      } else { // didnot like
+                        //already favorited 
+                        if (favoriteArray.indexOf(req.params.postID) > -1) {
+                          res.render('otherspost', {username: creater.username, 
+                            postPicSrc: "/post/"+req.params.postID,
+                            likenum: post.likes.length, 
+                            postID: req.params.postID, 
+                            heartBtnClass: 'heartbutton',
+                            rate: rate,
+                            date: date,
+                            caption: caption, 
+                            favorite: 'Remove From Fravorites',
+                            commentUserProfile: commentUserProfileArray,
+                            commentProfilePic: commentProfilePicArray,
+                            commentCreater: commentUsernameArray,
+                            commentDate: commentDateArray, 
+                            commentContent: commentContentArray,
+                            allcommentsrequest: '/allcomments/'+req.params.postID });
+                        } else {
+                          res.render('otherspost', {username: creater.username, 
+                            postPicSrc: "/post/"+req.params.postID,
+                            likenum: post.likes.length, 
+                            postID: req.params.postID, 
+                            heartBtnClass: 'heartbutton',
+                            rate: rate,
+                            date: date,
+                            caption: caption, 
+                            favorite: 'Save To Favorites',
+                            commentUserProfile: commentUserProfileArray,
+                            commentProfilePic: commentProfilePicArray,
+                            commentCreater: commentUsernameArray,
+                            commentDate: commentDateArray, 
+                            commentContent: commentContentArray,
+                            allcommentsrequest: '/allcomments/'+req.params.postID});
+                        }
+                      }
+                    });
+                  });
                 }
-              } else { // didnot like
-                //already favorited 
-                if (favoriteArray.indexOf(req.params.postID) > -1) {
-                  res.render('otherspost', {username: creater.username, 
-                    postPicSrc: "/post/"+req.params.postID,
-                    likenum: post.likes.length, 
-                    postID: req.params.postID, 
-                    heartBtnClass: 'heartbutton',
-                    rate: rate,
-                    date: date,
-                    caption: caption, 
-                    favorite: 'Remove From Fravorites'});
-                } else {
-                  res.render('otherspost', {username: creater.username, 
-                    postPicSrc: "/post/"+req.params.postID,
-                    likenum: post.likes.length, 
-                    postID: req.params.postID, 
-                    heartBtnClass: 'heartbutton',
-                    rate: rate,
-                    date: date,
-                    caption: caption, 
-                    favorite: 'Save To Favorites'});
-                }
-              }
+              });
             });
           });
         });
@@ -82,29 +134,63 @@ router.get('/mypostpic/:postID', function (req, res) {
     Post.findById(req.params.postID, function (err, post) {
       Post.getLikers(req.params.postID, function (likerArray) {
         User.findOne({username: req.session.username}, function (err, user) {
-            var rate = Number(post.rating);
-            var caption = post.caption;
-            var date = new Date(post.created_at).toDateString();
+          Post.getComments(req.params.postID, function (commentsIDArray) {
+            Comment.find({'_id': {$in: commentsIDArray}}, function (err, commentData) {
+              var commentUsernameArray = [];
+              var commentProfilePicArray = [];
+              var commentContentArray = [];
+              var commentUserProfileArray = [];
+              var commentDateArray = [];
+              var commentStart = commentData.length - 10;
+              if (commentStart < 0) {
+                commentStart = 0;
+              }
+              for (var i = commentStart; i < commentData.length; i++) {
+                commentUsernameArray[i - commentStart] = commentData[i].username;
+                commentContentArray[i - commentStart] = commentData[i].content;
+                commentProfilePicArray[i - commentStart] = '/profilePic/' + commentData[i - commentStart].author;
+                commentUserProfileArray[i - commentStart] = '/userprofile/' + commentData[i - commentStart].author;
+                var comDate = new Date(commentData[i - commentStart].created_at);
+                commentDateArray[i - commentStart] = comDate.toDateString() + ' ' + comDate.getHours() +':' + comDate.getMinutes();
+              }
+              var rate = Number(post.rating);
+              var caption = post.caption;
+              var date = new Date(post.created_at);
+              date = date.toDateString() + ' ' + date.getHours() +':' + date.getMinutes();
 
-            if (likerArray.indexOf(user._id) > -1) {
-              res.render('mypost', {username: req.session.username, 
-                postPicSrc: "/post/"+req.params.postID,
-                likenum: post.likes.length, 
-                postID: req.params.postID, 
-                heartBtnClass: 'heartbutton like', 
-                rate: rate, 
-                date: date,
-                caption: caption});
-            } else { // didnot like 
-              res.render('mypost', {username: req.session.username, 
-                postPicSrc: "/post/"+req.params.postID,
-                likenum: post.likes.length, 
-                postID: req.params.postID, 
-                heartBtnClass: 'heartbutton',
-                rate: rate,
-                date: date,
-                caption: caption});
-            }
+              if (likerArray.indexOf(user._id) > -1) {
+                res.render('mypost', {username: req.session.username, 
+                  postPicSrc: "/post/"+req.params.postID,
+                  likenum: post.likes.length, 
+                  postID: req.params.postID, 
+                  heartBtnClass: 'heartbutton like', 
+                  rate: rate, 
+                  date: date,
+                  caption: caption, 
+                  commentUserProfile: commentUserProfileArray,
+                  commentProfilePic: commentProfilePicArray,
+                  commentCreater: commentUsernameArray,
+                  commentDate: commentDateArray, 
+                  commentContent: commentContentArray, 
+                  allcommentsrequest: '/allcomments/'+req.params.postID});
+              } else { // didnot like 
+                res.render('mypost', {username: req.session.username, 
+                  postPicSrc: "/post/"+req.params.postID,
+                  likenum: post.likes.length, 
+                  postID: req.params.postID, 
+                  heartBtnClass: 'heartbutton',
+                  rate: rate,
+                  date: date,
+                  caption: caption,
+                  commentUserProfile: commentUserProfileArray,
+                  commentProfilePic: commentProfilePicArray,
+                  commentCreater: commentUsernameArray,
+                  commentDate: commentDateArray, 
+                  commentContent: commentContentArray,
+                  allcommentsrequest: '/allcomments/'+req.params.postID});
+              }
+           });
+          });
         });
       });
     });
@@ -139,7 +225,6 @@ router.post('/postpic/like', function (req, res) {
       });
     });
   });
-  //res.send("ok");
 });
 
 router.post('/postpic/favorite', function (req, res) {
@@ -152,16 +237,16 @@ router.post('/postpic/favorite', function (req, res) {
           if (err) {
             res.send('error' + err);
           } else {
-            res.send("ok");
+            res.send('ok');
           }
         });
       } else {
       // look at othersprofile/follow for explanation
         User.favorite(myID, req.body.postID, function (err) {
           if (err) {
-            res.redirect('error' + err);
+            res.send('error' + err);
           } else {
-            res.send("ok");
+            res.send('ok');
           }
         });
       }
@@ -169,5 +254,42 @@ router.post('/postpic/favorite', function (req, res) {
   });
 });
 
+
+router.post('/postpic/comment', function (req, res) {
+  Comment.addComment(req.session.username, req.body.postID, req.body.commentContent, function (err) {
+    if (err) {
+      res.send('error' + err);
+    } else {
+      User.findOne({username: req.session.username}, function (err, user) {
+        res.send(user);
+      });
+    }
+  });
+});
+
+router.get('/allcomments/:postID', function (req, res) {
+  Post.getComments(req.params.postID, function (commentsIDArray) {
+    Comment.find({'_id': {$in: commentsIDArray}}, function (err, commentData) {
+      var commentUsernameArray = [];
+      var commentProfilePicArray = [];
+      var commentContentArray = [];
+      var commentUserProfileArray = [];
+      var commentDateArray = [];
+      for (var i = 0; i < commentData.length; i++) {
+        commentUsernameArray[i] = commentData[i].username;
+        commentContentArray[i] = commentData[i].content;
+        commentProfilePicArray[i] = '/profilePic/' + commentData[i].author;
+        commentUserProfileArray[i] = '/userprofile/' + commentData[i].author;
+        var comDate = new Date(commentData[i].created_at);
+        commentDateArray[i] = comDate.toDateString() + ' ' + comDate.getHours() +':' + comDate.getMinutes();
+      }
+      res.render('allcomments', {commentUserProfile: commentUserProfileArray,
+                            commentProfilePic: commentProfilePicArray,
+                            commentCreater: commentUsernameArray,
+                            commentDate: commentDateArray, 
+                            commentContent:commentContentArray});
+    });
+  });
+});
 
 module.exports = router;

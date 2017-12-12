@@ -82,6 +82,8 @@ button:hover{
     margin: 0 auto;
 }
 
+
+
 #searchUserInfo {
     text-align: center;
     display: block;
@@ -106,6 +108,7 @@ button:hover{
   text-align: center;
   font: 1em "Arial Rounded MT", "Optima", "Arial";
   margin-top: 50px;
+  color: #aaa;
 }
 
 #searchBox{
@@ -396,6 +399,7 @@ button:hover{
 }
 
 #heart {
+    margin-top: 30px;
     width: 1.8vw;
     height: 1.3vw;
     transition: background 0.5s ease;
@@ -423,7 +427,7 @@ button:hover{
 #numlikes { 
   font: 3vw "Arial Rounded MT Bold", "Optima", "Arial"; 
   position: absolute;
-  margin-top: 3.5vw;
+  margin-top: 40px;
   margin-left: 33vw;
   color: #888;
 }
@@ -452,8 +456,12 @@ button:hover{
   position: relative;
   text-align: center;
   display: block;
-  margin-top: 1vw;
+  margin-top: 25px;
   margin-left: 33vw;
+}
+
+#favorite {
+  font: 1.5vw "Arial Rounded MT", "Optima", "Arial"; 
 }
 
 #caption {
@@ -462,4 +470,62 @@ button:hover{
   display: block;
   font: 1.2em "Arial Rounded MT Bold", "Optima", "Arial";
   margin-bottom: 30px;
+}
+
+#commentSection {
+  background-color: #ffccb3; 
+}
+
+#commentContent {
+  padding-top: 50px;
+  margin-top: 80px;
+  text-align: center;
+}
+
+#commentInputSection{
+  text-align:center;
+}
+
+#commentInput {
+  margin-top: 10px;
+  width: 50%;
+  margin-left: 10px;
+}
+
+#submitComment {
+  background-color: #fff;
+  margin-bottom: 80px;
+}
+
+#submitComment:hover {
+  background-color: #777;
+  margin-bottom: 80px;
+}
+
+#commentProfilePic {
+    object-fit: cover;
+    width: 60px;
+    height: 60px;
+    border-radius: 5em;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    display: block;
+    margin: 0 auto;
+}
+
+#commentText {
+   margin-right: 20vw;
+  margin-left: 20vw;
+}
+
+#commentdate {
+  font-size: 12px;
+  color: #aaa;
+}
+
+#olderComments {
+  background-color: #fff;
+  margin-bottom: 80px;
 }

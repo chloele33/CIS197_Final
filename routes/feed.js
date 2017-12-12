@@ -19,8 +19,6 @@ router.get('/feed', function (req, res) {
               i--;
             }
           }
-          console.log(followingArray);
-          console.log(allPosts);
           var postPicArray = [];
           var postValue = [];
           for (var j = 0; j < allPosts.length; j++) {

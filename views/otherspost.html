@@ -31,6 +31,8 @@
 
 
     <p id = "username"> <%= username %> </p>
+            <p id = "date"> <%= date %> </p>
+
         <div id = "caption"> <p><%=caption%> </p></div>
     <img name = 'postpage' id="postpage" src = '<%= postPicSrc %>' class = '<%= postID %>'/> 
     <div id = 'likes'>
@@ -51,12 +53,28 @@
       <p>
         <button id = "favorite" name = "favorite" value = "favorite"><%=favorite%></button>
       </p>
-    
     </div>
-        <p id = "date"> <%= date %> </p>
+     <div id = "commentSection">
+      <div id = "commentContent">
+         <a href= '<%=allcommentsrequest%>' > <button href = "#" id = "olderComments" name = "olderComments" value = "olderComments">View All Comments</button> </a>
+        <% for(var i = 0; i < commentDate.length; i++) {%>
+          <div id="comment-cell">
+            <a href= '<%= commentUserProfile[i] %>' ><img id="commentProfilePic" src= '<%=commentProfilePic[i]%>' >
+            <p id = "commentInfo">
+            <h2 id = "commentCreater"> <%=commentCreater[i]%> </h2>
+            <p id = "commentdate"> <%= commentDate[i]%></p>
+            <p id = "commentText"> <%= commentContent[i]%></p></p></a>
+          </div>
+        <% } %>
+        </div>
+       <div id = "commentInputSection">
+         <p>New Comment:
+          <input type="text" name="comment" id = "commentInput"></p>
+             <button id = "submitComment" name = "submitComment" value = "submitCommnet">Post Comment</button>
+        </div>
+    </div>
 
   </body>
 </html>
-
 
 

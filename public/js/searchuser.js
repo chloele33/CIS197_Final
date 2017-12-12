@@ -1,24 +1,4 @@
 $(document ).ready(function() {
-	// makeSearchAjax();
-	// $('#searchBox').on('keyup', function() {
-	// 	makeSearchAjax();
-	// 	//console.log($('#searchBox').val());
-	// });
-
-	// function makeSearchAjax() {
-	//     $.ajax({
-	//       type: 'POST',
-	//       url: '/searchuser',
-	//       data: { 
-	//         searchuser: $('#searchBox').val() 
-	//       },
-	//       success: function(data) {
-	//         $('#results').empty();
-	//         console.log("data");
-	//         //addResultsToPage(username);          
- //      	  }
- //   		});
- //  	}
 
  	//makeSearchAjax();
  	var searchRequest = null;
