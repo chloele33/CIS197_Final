@@ -61,9 +61,9 @@ router.post('/searchuser', function (req, res) {
 			}); 
 		} else {
 			User.find({'fullname': searchTerm}, function(err, docs) {
-		 		if (docs.length > 0) {
+		 		//if (docs.length > 0) {
 		 			res.send(docs);
-		 		}
+		 		//}
 			});
 		}  
  	});

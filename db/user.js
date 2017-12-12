@@ -137,9 +137,47 @@ userSchema.statics.getPosts = function (username, cb) {
   });
 }
 
+userSchema.statics.getFollowers = function (username, cb) {
+  User.findOne({username: username}, function(err, user) {
+    return cb(user.followers);
+  });
+}
+
+userSchema.statics.getFollowing= function (username, cb) {
+  User.findOne({username: username}, function (err, user) {
+    return cb(user.following);
+  });
+}
+
+userSchema.statics.unfollow = function (myUserID, userID, cb) {
+  // User.update({_id: myUserID}, { "$pull": { "following": { "User": userID } }}, false, true);
+  // User.update({_id: userID}, { "$pull": { "followers": { "User": myUserID } }}, false, true);
+  User.findById(myUserID, function (err, me) {
+    User.findById(userID, function (eror, user) {
+      me.following.pull(user);
+      user.followers.pull(me);
+      user.save();
+      me.save();
+      cb(null);
+    });
+  });
+}
+
+userSchema.statics.follow = function (myUserID, userID, cb) {
+  User.findById(myUserID, function (err, me) {
+    User.findById(userID, function (eror, user) {
+      me.following.push(user);
+      user.followers.push(me);
+      user.save();
+      me.save();
+      cb(null);
+    });
+  });
+}
+
 // postSchema statics/methods
 postSchema.statics.addPost = function (username, imagefile, rating, caption, cb) {
-  User.findOne({username: username}, function(err, user) {
+  User.findOne({username: username}, function (err, user) {
     var newPost = new Post({caption: caption, rating: rating, _creater: user._id});
     newPost.created_at = new Date();
     newPost.img.data = imagefile.data;

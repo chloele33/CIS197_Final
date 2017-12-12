@@ -2,7 +2,9 @@
 <html>
 	<head>
    	 	<title>User Profile</title>
-   	 	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+      <script src="/js/jquery.min.js"></script>
+      <script src="/js/othersprofile.js"></script>
+      <link rel="stylesheet" type="text/css" href="/css/style.css" />
 	</head>
 
 	<body>
@@ -29,22 +31,28 @@
     </div>
 
 
-    <p id = "username"> <%= username %> </p>
+    <p id = "username"><%=username%></p>
     <img name = 'profilePic' id="profilePic" src = '<%= profilePicSrc %>'/>    
     <p id = "fullname"> <%= fullname %> </p>
     <p id = "myBio"> <%= bio %> </p>
-    <form method="post">
       <p>
-        <button type="submit" name = "act" value = "follow">Follow</button>
+        <button name = "act" id = "followBtn"><%=followBtn%></button>
       </p>
-    </form>
-    <p>
+     <a href = "/followers"><div id = "followStatus" 
+      <p> Followers: 
+      <a  id = "followers"><%= followers %> </a> </p>
+    </div></a>
+     <a href = "/following"> <div id = "followStatus" href = "#"> 
+      <p> Following: 
+      <a id = "following"><%= following %> </a> </p>
+    </div> </a>
+    <div id = "posts">
       <% for(var i = posts.length - 1; i >= 0; i--) {%>
         <div class = "responsive">
           <img name = 'postPic' id="postPic" src = '<%= posts[i] %>' value = '<%= postID[i]%>'/>
         </div>
       <% } %>
-    </p>
+    </div>
 
   </body>
 </html>

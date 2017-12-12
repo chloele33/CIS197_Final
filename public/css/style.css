@@ -129,22 +129,46 @@ button:hover{
     margin: 1vw 1vw;
 }
 
+#followStatus {
+  font: 1em "Arial Rounded MT Bold", "Optima", "Arial"; 
+  text-align: center;
+  margin: 10px 10px;
+}
+
+#followers {
+  margin-bottom: 50px;
+}
+
+#following {
+  margin-top: 50px;
+
+}
 .responsive {
     float: left;
 }
 
+#posts {
+  margin-top: 30px;
+}
+
 #myBio {
   text-align: center;
+  margin-right: 20vw;
+  margin-left: 20vw;
 }
 
 #fullname {
   font: 1em "Arial Rounded MT Bold", "Optima", "Arial"; 
   text-align: center;
+    margin-right: 30vw;
+  margin-left: 30vw;
 }
 
 #username {
   font: 3em "Arial Rounded MT Bold", "Optima", "Arial"; 
   text-align: center;
+    margin-right: 30vw;
+  margin-left: 30vw;
 }
 
 #output {
@@ -158,6 +182,12 @@ button:hover{
   display: block;
   margin: 0 auto;
 
+}
+
+#followBtn {
+  text-align: center;
+  margin:0 auto;
+    display:block;
 }
  
  
