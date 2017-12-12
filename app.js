@@ -53,14 +53,6 @@ app.use('/', loginRouter);
 var signupRouter = require('./routes/signup');
 app.use('/', signupRouter);
 
-// enter feed, which will be a react front end eventually 
-app.get('/feed', function (req, res) {
-  if (!req.session.username || req.session.username === '') {
-    res.send('You tried to access a protected page');
-  } else {
-    res.render('feed', { username: req.session.username });
-  }
-});
 
 app.post('/feed', function (req, res) {
   if (req.body.act == 'myProfile') {
@@ -91,6 +83,10 @@ app.use('/', postpicRouter);
 // search user router
 var searchUserRouter = require('./routes/searchuser');
 app.use('/', searchUserRouter);
+
+// feed router
+var feedRouter = require('./routes/feed');
+app.use('/', feedRouter);
 
 // logout 
 app.get('/logout', function(req, res) {

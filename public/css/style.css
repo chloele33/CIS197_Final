@@ -102,7 +102,11 @@ button:hover{
     font: 1.5em "Arial Rounded MT Bold", "Optima", "Arial";
 }
 
-
+#date {
+  text-align: center;
+  font: 1em "Arial Rounded MT", "Optima", "Arial";
+  margin-top: 50px;
+}
 
 #searchBox{
   width: 50vw;
@@ -129,6 +133,19 @@ button:hover{
     margin: 1vw 1vw;
 }
 
+#feedPic {
+    object-fit: cover;
+    width: 60vw;
+    height: 60vw;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    display: block;
+    margin-left: 32%;
+    margin-bottom: 10px;
+}
+
 #followingStatus {
   font: 1em "Arial Rounded MT Bold", "Optima", "Arial"; 
   text-align: center;
@@ -152,6 +169,7 @@ button:hover{
 .responsive {
     float: left;
 }
+
 
 #posts {
   margin-top: 30px;
@@ -334,6 +352,18 @@ button:hover{
     height: 46vw;
   }
 
+  #feedPic{
+    object-fit: cover;
+    width: 60vw;
+    height: 60vw;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    display: block;
+    margin-left: 32%;
+  }
+
 }
 
 #postpage {
@@ -353,7 +383,7 @@ button:hover{
   position: absolute;
   width: 3vw;
   height: 1.5vw;
-  margin-top: 5vw;
+  margin-top: 2vw;
   margin-left: 23vw;
   border-radius: 5px;
   background: none;
@@ -393,7 +423,7 @@ button:hover{
 #numlikes { 
   font: 3vw "Arial Rounded MT Bold", "Optima", "Arial"; 
   position: absolute;
-  margin-top: 7vw;
+  margin-top: 3.5vw;
   margin-left: 33vw;
   color: #888;
 }
@@ -422,7 +452,14 @@ button:hover{
   position: relative;
   text-align: center;
   display: block;
-  margin-top: 7vw;
+  margin-top: 1vw;
   margin-left: 33vw;
 }
 
+#caption {
+  position: relative;
+  text-align: center;
+  display: block;
+  font: 1.2em "Arial Rounded MT Bold", "Optima", "Arial";
+  margin-bottom: 30px;
+}

@@ -55,25 +55,25 @@ router.get('/myprofile', function (req, res) {
         User.getPosts(req.session.username, function (postIDArray) {
           User.getFollowing(req.session.username, function (followingArray) {
             User.getFollowers(req.session.username, function (followerArray) {
-                // postValue stores the ID of the post and inserts as value into html
-                // so we can track the post in the database 
-                var postValue = [];
-                var postPicArray = [];
-                // turn array into the format of /post/postID
-                for (var i = 0; i < postIDArray.length; i++) {
-                  postValue = postIDArray[i];
-                  postPicArray[i] = '/mypostPic/' + postIDArray[i];
-                  postIDArray[i] = '/post/' + postIDArray[i];
-                }
-                res.render('myprofile', {postID: postValue,
-                                          posts: postIDArray, 
-                                          postPic: postPicArray,
-                                          profilePicSrc: '/profilePic', 
-                                          bio: bio, 
-                                          username: req.session.username, 
-                                          fullname: fullname,
-                                          following: followingArray.length,
-                                          followers: followerArray.length});
+              // postValue stores the ID of the post and inserts as value into html
+              // so we can track the post in the database 
+              var postValue = [];
+              var postPicArray = [];
+              // turn array into the format of /post/postID
+              for (var i = 0; i < postIDArray.length; i++) {
+                postValue = postIDArray[i];
+                postPicArray[i] = '/mypostPic/' + postIDArray[i];
+                postIDArray[i] = '/post/' + postIDArray[i];
+              }
+              res.render('myprofile', {postID: postValue,
+                posts: postIDArray, 
+                postPic: postPicArray,
+                profilePicSrc: '/profilePic', 
+                bio: bio, 
+                username: req.session.username, 
+                fullname: fullname,
+                following: followingArray.length,
+                followers: followerArray.length});
             });
           });
         });
@@ -82,6 +82,25 @@ router.get('/myprofile', function (req, res) {
   }
 });
 
+router.get('/favorites', function (req, res) {
+  if (!req.session.username || req.session.username === '') {
+    res.redirect('login');
+  } else {
+    User.getFavorites(req.session.username, function (favoriteArray) {
+      var postValue = [];
+      var postPicArray = [];
+      for (var i = 0; i < favoriteArray.length; i++) {
+        postValue = favoriteArray[i];
+        postPicArray[i] = '/postPic/' + favoriteArray[i];
+        favoriteArray[i] = '/post/' + favoriteArray[i];
+      }
+      res.render('favorites', 
+        {postID: postValue,
+        posts: favoriteArray, 
+        postPic: postPicArray});
+    });
+  }
+});
 
 router.post('/myprofile', function (req, res) {
    if (req.body.act == 'updateProfile') {

@@ -163,11 +163,11 @@ router.get('/followers/:username', function (req, res) {
         }
 
         res.render('followers', {username: req.params.username, 
-                        follow: "is followed by:", 
-                        userprofile: profilepageArray,
-                        userpic: profilepicArray,
-                        allusername: usernameArray, 
-                        fullname: fullnameArray});
+          follow: "is followed by:", 
+          userprofile: profilepageArray,
+          userpic: profilepicArray,
+          allusername: usernameArray, 
+          fullname: fullnameArray});
       });
     });
   }

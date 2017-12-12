@@ -185,6 +185,32 @@ userSchema.statics.follow = function (myUserID, userID, cb) {
   });
 }
 
+userSchema.statics.getFavorites = function (username, cb) {
+  User.findOne({username: username}, function (err, user) {
+    return cb(user.favorites);
+  });
+}
+
+userSchema.statics.favorite = function (myUserId, postID, cb) {
+  User.findById(myUserId, function (err, me) {
+    Post.findById(postID, function (eror, post) {
+      me.favorites.push(post);
+      me.save();
+      cb(null);
+    });
+  });
+}
+
+userSchema.statics.unfavorite = function (myUserId, postID, cb) {
+  User.findById(myUserId, function (err, me) {
+    Post.findById(postID, function (eror, post) {
+      me.favorites.pull(post);
+      me.save();
+      cb(null);
+    });
+  });
+}
+
 // postSchema statics/methods
 postSchema.statics.addPost = function (username, imagefile, rating, caption, cb) {
   User.findOne({username: username}, function (err, user) {

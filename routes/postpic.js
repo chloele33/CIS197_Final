@@ -12,23 +12,62 @@ router.get('/postpic/:postID', function (req, res) {
     Post.findById(req.params.postID, function (err, post) {
       Post.getLikers(req.params.postID, function (likerArray) {
         User.findOne({username: req.session.username}, function (err, user) {
-            //already liked
-            var rate = Number(post.rating);
-            if (likerArray.indexOf(user._id) > -1) {
-              res.render('otherspost', {username: req.session.username, 
-                                    postPicSrc: "/post/"+req.params.postID,
-                                    likenum: post.likes.length, 
-                                    postID: req.params.postID, 
-                                    heartBtnClass: 'heartbutton like',
-                                  rate: rate});
-            } else { // didnot like 
-              res.render('otherspost', {username: req.session.username, 
-                                    postPicSrc: "/post/"+req.params.postID,
-                                    likenum: post.likes.length, 
-                                    postID: req.params.postID, 
-                                    heartBtnClass: 'heartbutton',
-                                  rate: rate});
-            }
+          User.getFavorites(req.session.username, function (favoriteArray) {
+            User.findById(post._creater, function (err, creater) {
+              var rate = Number(post.rating);
+              var date = new Date(post.created_at).toDateString();
+              var caption = post.caption;
+              //already liked
+              if (likerArray.indexOf(user._id) > -1) {
+                //already favorited 
+                if (favoriteArray.indexOf(req.params.postID) > -1) {
+                  res.render('otherspost', {username: creater.username, 
+                    postPicSrc: "/post/"+req.params.postID,
+                    likenum: post.likes.length, 
+                    postID: req.params.postID, 
+                    heartBtnClass: 'heartbutton like',
+                    caption: caption,
+                    date: date,
+                    rate: rate, 
+                    favorite: 'Remove From Fravorites'});
+
+                } else {
+                  res.render('otherspost', {username: creater.username, 
+                    postPicSrc: "/post/"+req.params.postID,
+                    likenum: post.likes.length, 
+                    postID: req.params.postID, 
+                    heartBtnClass: 'heartbutton like',
+                    caption: caption,
+                    date: date,
+                    rate: rate, 
+                    favorite: 'Save To Favorites'});
+                }
+              } else { // didnot like
+                //already favorited 
+                if (favoriteArray.indexOf(req.params.postID) > -1) {
+                  res.render('otherspost', {username: creater.username, 
+                    postPicSrc: "/post/"+req.params.postID,
+                    likenum: post.likes.length, 
+                    postID: req.params.postID, 
+                    heartBtnClass: 'heartbutton',
+                    rate: rate,
+                    date: date,
+                    caption: caption, 
+                    favorite: 'Remove From Fravorites'});
+                } else {
+                  res.render('otherspost', {username: creater.username, 
+                    postPicSrc: "/post/"+req.params.postID,
+                    likenum: post.likes.length, 
+                    postID: req.params.postID, 
+                    heartBtnClass: 'heartbutton',
+                    rate: rate,
+                    date: date,
+                    caption: caption, 
+                    favorite: 'Save To Favorites'});
+                }
+              }
+            });
+          });
         });
       });
     });
@@ -44,20 +83,27 @@ router.get('/mypostpic/:postID', function (req, res) {
       Post.getLikers(req.params.postID, function (likerArray) {
         User.findOne({username: req.session.username}, function (err, user) {
             var rate = Number(post.rating);
+            var caption = post.caption;
+            var date = new Date(post.created_at).toDateString();
+
             if (likerArray.indexOf(user._id) > -1) {
               res.render('mypost', {username: req.session.username, 
-                                    postPicSrc: "/post/"+req.params.postID,
-                                    likenum: post.likes.length, 
-                                    postID: req.params.postID, 
-                                    heartBtnClass: 'heartbutton like', 
-                                    rate: rate});
+                postPicSrc: "/post/"+req.params.postID,
+                likenum: post.likes.length, 
+                postID: req.params.postID, 
+                heartBtnClass: 'heartbutton like', 
+                rate: rate, 
+                date: date,
+                caption: caption});
             } else { // didnot like 
               res.render('mypost', {username: req.session.username, 
-                                    postPicSrc: "/post/"+req.params.postID,
-                                    likenum: post.likes.length, 
-                                    postID: req.params.postID, 
-                                    heartBtnClass: 'heartbutton',
-                                    rate: rate,});
+                postPicSrc: "/post/"+req.params.postID,
+                likenum: post.likes.length, 
+                postID: req.params.postID, 
+                heartBtnClass: 'heartbutton',
+                rate: rate,
+                date: date,
+                caption: caption});
             }
         });
       });
@@ -94,6 +140,33 @@ router.post('/postpic/like', function (req, res) {
     });
   });
   //res.send("ok");
+});
+
+router.post('/postpic/favorite', function (req, res) {
+  User.findOne({username: req.session.username}, function (err, me) {
+    var myID = me._id;
+    User.getFavorites(req.session.username, function (favoriteArray) {
+      // look at othersprofile/follow for explanation
+      if (favoriteArray.indexOf(req.body.postID) > -1) {
+        User.unfavorite(myID, req.body.postID, function (err) {
+          if (err) {
+            res.send('error' + err);
+          } else {
+            res.send("ok");
+          }
+        });
+      } else {
+      // look at othersprofile/follow for explanation
+        User.favorite(myID, req.body.postID, function (err) {
+          if (err) {
+            res.redirect('error' + err);
+          } else {
+            res.send("ok");
+          }
+        });
+      }
+    });
+  });
 });
 
 
