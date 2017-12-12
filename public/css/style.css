@@ -194,7 +194,7 @@ button:hover{
 #followBtn {
   text-align: center;
   margin:0 auto;
-    display:block;
+  display:block;
 }
  
  
@@ -214,18 +214,19 @@ button:hover{
     color: #ccc;
 }
  
-.acidjs-rating-stars label:hover,
-.acidjs-rating-stars label:hover ~ label
+.acidjs-rating-stars.hover label:hover,
+.acidjs-rating-stars.hover label:hover ~ label
 {
     color: #ffeecc;
+    transition:color 0.3s ease-in-out;
 }
 .acidjs-rating-stars label::before
 {
     content: "\2605";
-    width: 20px;
-    line-height: 20px;
+    width: 5vw;
+    line-height: 5vw;
     text-align: center;
-    font-size: 20px;
+    font-size: 3vw;
 }
  
 .acidjs-rating-stars input:checked ~ label
@@ -417,4 +418,11 @@ button:hover{
     transform-origin :100% 100%;
 }
 
+#rating {
+  position: relative;
+  text-align: center;
+  display: block;
+  margin-top: 7vw;
+  margin-left: 33vw;
+}
 

@@ -15,7 +15,7 @@
         <div class = "dropdown">
           <li class="myprofile"><a href="#">Profile</a></li>
           <div class="dropdown-content">
-            <a href="#">My Foods</a>
+            <a href="/myprofile">My Foods</a>
             <a href="/logout">Logout</a>
           </div>
         </div>
@@ -38,6 +38,15 @@
       <div id='heart' class='<%= heartBtnClass%>'></div>
       <div id ='numlikes'> <%=likenum%> </div>
       </p>
+    </div>
+    <div class="acidjs-rating-stars" id = "rating">
+      <p>  <br>
+            <input type="radio" name="rate" id="group-1-0" value="5" disabled = true <%if(rate==5){%> checked="true" <%}%>/><label for="group-1-0"></label>
+            <input type="radio" name="rate" id="group-1-1" value="4"  disabled = true<%if(rate==4){%> checked="true" <%}%>/><label for="group-1-1"></label>
+            <input type="radio" name="rate" id="group-1-2" value="3" disabled = true <%if(rate==3){%> checked="true" <%}%>/><label for="group-1-2"></label>
+            <input type="radio" name="rate" id="group-1-3" value="2"  disabled = true<%if(rate==2){%> checked="true" <%}%>/><label for="group-1-3"></label>
+            <input type="radio" name="rate" id="group-1-4"  value="1" disabled = true <%if(rate==1){%> checked="true" <%}%>/><label for="group-1-4"></label>
+       </p>
     </div>
 
   </body>

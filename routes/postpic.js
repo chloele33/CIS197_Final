@@ -13,18 +13,21 @@ router.get('/postpic/:postID', function (req, res) {
       Post.getLikers(req.params.postID, function (likerArray) {
         User.findOne({username: req.session.username}, function (err, user) {
             //already liked
+            var rate = Number(post.rating);
             if (likerArray.indexOf(user._id) > -1) {
               res.render('otherspost', {username: req.session.username, 
                                     postPicSrc: "/post/"+req.params.postID,
                                     likenum: post.likes.length, 
                                     postID: req.params.postID, 
-                                    heartBtnClass: 'heartbutton like'});
+                                    heartBtnClass: 'heartbutton like',
+                                  rate: rate});
             } else { // didnot like 
               res.render('otherspost', {username: req.session.username, 
                                     postPicSrc: "/post/"+req.params.postID,
                                     likenum: post.likes.length, 
                                     postID: req.params.postID, 
-                                    heartBtnClass: 'heartbutton'});
+                                    heartBtnClass: 'heartbutton',
+                                  rate: rate});
             }
         });
       });
@@ -40,19 +43,21 @@ router.get('/mypostpic/:postID', function (req, res) {
     Post.findById(req.params.postID, function (err, post) {
       Post.getLikers(req.params.postID, function (likerArray) {
         User.findOne({username: req.session.username}, function (err, user) {
-            //already liked
+            var rate = Number(post.rating);
             if (likerArray.indexOf(user._id) > -1) {
               res.render('mypost', {username: req.session.username, 
                                     postPicSrc: "/post/"+req.params.postID,
                                     likenum: post.likes.length, 
                                     postID: req.params.postID, 
-                                    heartBtnClass: 'heartbutton like'});
+                                    heartBtnClass: 'heartbutton like', 
+                                    rate: rate});
             } else { // didnot like 
               res.render('mypost', {username: req.session.username, 
                                     postPicSrc: "/post/"+req.params.postID,
                                     likenum: post.likes.length, 
                                     postID: req.params.postID, 
-                                    heartBtnClass: 'heartbutton'});
+                                    heartBtnClass: 'heartbutton',
+                                    rate: rate,});
             }
         });
       });
