@@ -9,13 +9,10 @@ var User = data.user;
 const fileUpload = require('express-fileupload');
 var fs = require('fs');
 
-
-
 // Serve static pages
 app.engine('html', require('ejs').__express);
 app.set('view engine', 'html');
 app.use(express.static(__dirname + '/public'));
-
 
 // Generate a random cookie secret for this app
 var generateCookieSecret = function () {
@@ -89,7 +86,7 @@ var feedRouter = require('./routes/feed');
 app.use('/', feedRouter);
 
 // logout 
-app.get('/logout', function(req, res) {
+app.get('/logout', function (req, res) {
   req.session.username = '';
   //res.render('logout');
   res.redirect('login');

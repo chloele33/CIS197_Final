@@ -13,7 +13,7 @@ router.get('/userprofile/:userID', function (req, res) {
     res.redirect('/login');
   } else {
     //console.log(req.params.userID);
-    User.findById(req.params.userID, function(err, user) {
+    User.findById(req.params.userID, function (err, user) {
       if (err) return next(err);
       if (user.username == req.session.username) {
         res.redirect('/myprofile');
@@ -40,7 +40,7 @@ router.get('/userprofile/:userID', function (req, res) {
                           res.render('othersprofile', {postID: postValue,
                                                     posts: postIDArray, 
                                                     postPic: postPicArray,
-                                                    profilePicSrc: '/profilePic/'+req.params.userID, 
+                                                    profilePicSrc: '/profilePic/' + req.params.userID, 
                                                     bio: bio, 
                                                     username: user.username, 
                                                     followBtn: 'Unfollow',
@@ -59,15 +59,15 @@ router.get('/userprofile/:userID', function (req, res) {
                           postIDArray[i] = '/post/' + postIDArray[i];
                         }
                         res.render('othersprofile', {postID: postValue,
-                                                  posts: postIDArray, 
-                                                  postPic: postPicArray,
-                                                  profilePicSrc: '/profilePic/'+req.params.userID, 
-                                                  bio: bio, 
-                                                  username: user.username,
-                                                  followBtn: 'Follow', 
-                                                  fullname: fullname,
-                                                  following: followingArray.length,
-                                                  followers: followerArray.length});
+                          posts: postIDArray, 
+                          postPic: postPicArray,
+                          profilePicSrc: '/profilePic/' + req.params.userID, 
+                          bio: bio, 
+                          username: user.username,
+                          followBtn: 'Follow', 
+                          fullname: fullname,
+                          following: followingArray.length,
+                          followers: followerArray.length});
                     
                       }
                     }); 
@@ -97,7 +97,7 @@ router.post('/othersprofile/follow', function (req, res) {
             res.send('error' + err);
           } else {
             //res.send('new user registered with username ' + req.body.username);
-            res.send("ok");
+            res.send('ok');
           }
         });
       } else {
@@ -108,7 +108,7 @@ router.post('/othersprofile/follow', function (req, res) {
             if (err) {
               res.redirect('error' + err);
             } else {
-              res.send("ok");
+              res.send('ok');
             }
           });
         }
@@ -135,11 +135,11 @@ router.get('/following/:username', function (req, res) {
         }
 
         res.render('followers', {username: req.params.username, 
-                        follow: "follows:", 
-                        userprofile: profilepageArray,
-                        userpic: profilepicArray,
-                        allusername: usernameArray, 
-                        fullname: fullnameArray});
+          follow: 'follows:', 
+          userprofile: profilepageArray,
+          userpic: profilepicArray,
+          allusername: usernameArray, 
+          fullname: fullnameArray});
       });
     });
   }
@@ -163,7 +163,7 @@ router.get('/followers/:username', function (req, res) {
         }
 
         res.render('followers', {username: req.params.username, 
-          follow: "is followed by:", 
+          follow: 'is followed by:', 
           userprofile: profilepageArray,
           userpic: profilepicArray,
           allusername: usernameArray, 

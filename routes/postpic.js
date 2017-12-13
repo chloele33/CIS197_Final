@@ -21,7 +21,7 @@ router.get('/postpic/:postID', function (req, res) {
               var caption = post.caption;
               User.findById(post._creater, function (err, creater) {
                 if (creater.username == req.session.username) {
-                  res.redirect('/mypostpic/'+req.params.postID);
+                  res.redirect('/mypostpic/' + req.params.postID);
                 } else {
                   Post.getComments(req.params.postID, function (commentsIDArray) {
                     Comment.find({'_id': {$in: commentsIDArray}}, function (err, commentData) {
@@ -47,7 +47,7 @@ router.get('/postpic/:postID', function (req, res) {
                         //already favorited 
                         if (favoriteArray.indexOf(req.params.postID) > -1) {
                           res.render('otherspost', {username: creater.username, 
-                            postPicSrc: "/post/"+req.params.postID,
+                            postPicSrc: '/post/' + req.params.postID,
                             likenum: post.likes.length, 
                             postID: req.params.postID, 
                             heartBtnClass: 'heartbutton like',
@@ -60,10 +60,10 @@ router.get('/postpic/:postID', function (req, res) {
                             commentCreater: commentUsernameArray,
                             commentDate: commentDateArray, 
                             commentContent: commentContentArray,
-                            allcommentsrequest: '/allcomments/'+req.params.postID });
+                            allcommentsrequest: '/allcomments/' + req.params.postID });
                         } else {
                           res.render('otherspost', {username: creater.username, 
-                            postPicSrc: "/post/"+req.params.postID,
+                            postPicSrc: '/post/' + req.params.postID,
                             likenum: post.likes.length, 
                             postID: req.params.postID, 
                             heartBtnClass: 'heartbutton like',
@@ -76,13 +76,13 @@ router.get('/postpic/:postID', function (req, res) {
                             commentCreater: commentUsernameArray,
                             commentDate: commentDateArray, 
                             commentContent: commentContentArray,
-                            allcommentsrequest: '/allcomments/'+req.params.postID });
+                            allcommentsrequest: '/allcomments/' + req.params.postID });
                         }
                       } else { // didnot like
                         //already favorited 
                         if (favoriteArray.indexOf(req.params.postID) > -1) {
                           res.render('otherspost', {username: creater.username, 
-                            postPicSrc: "/post/"+req.params.postID,
+                            postPicSrc: '/post/' + req.params.postID,
                             likenum: post.likes.length, 
                             postID: req.params.postID, 
                             heartBtnClass: 'heartbutton',
@@ -95,10 +95,10 @@ router.get('/postpic/:postID', function (req, res) {
                             commentCreater: commentUsernameArray,
                             commentDate: commentDateArray, 
                             commentContent: commentContentArray,
-                            allcommentsrequest: '/allcomments/'+req.params.postID });
+                            allcommentsrequest: '/allcomments/' + req.params.postID });
                         } else {
                           res.render('otherspost', {username: creater.username, 
-                            postPicSrc: "/post/"+req.params.postID,
+                            postPicSrc: '/post/' + req.params.postID,
                             likenum: post.likes.length, 
                             postID: req.params.postID, 
                             heartBtnClass: 'heartbutton',
@@ -111,7 +111,7 @@ router.get('/postpic/:postID', function (req, res) {
                             commentCreater: commentUsernameArray,
                             commentDate: commentDateArray, 
                             commentContent: commentContentArray,
-                            allcommentsrequest: '/allcomments/'+req.params.postID});
+                            allcommentsrequest: '/allcomments/' + req.params.postID});
                         }
                       }
                     });
@@ -151,7 +151,7 @@ router.get('/mypostpic/:postID', function (req, res) {
                 commentProfilePicArray[i - commentStart] = '/profilePic/' + commentData[i - commentStart].author;
                 commentUserProfileArray[i - commentStart] = '/userprofile/' + commentData[i - commentStart].author;
                 var comDate = new Date(commentData[i - commentStart].created_at);
-                commentDateArray[i - commentStart] = comDate.toDateString() + ' ' + comDate.getHours() +':' + comDate.getMinutes();
+                commentDateArray[i - commentStart] = comDate.toDateString() + ' ' + comDate.getHours() + ':' + comDate.getMinutes();
               }
               var rate = Number(post.rating);
               var caption = post.caption;
@@ -160,7 +160,7 @@ router.get('/mypostpic/:postID', function (req, res) {
 
               if (likerArray.indexOf(user._id) > -1) {
                 res.render('mypost', {username: req.session.username, 
-                  postPicSrc: "/post/"+req.params.postID,
+                  postPicSrc: '/post/' + req.params.postID,
                   likenum: post.likes.length, 
                   postID: req.params.postID, 
                   heartBtnClass: 'heartbutton like', 
@@ -175,7 +175,7 @@ router.get('/mypostpic/:postID', function (req, res) {
                   allcommentsrequest: '/allcomments/'+req.params.postID});
               } else { // didnot like 
                 res.render('mypost', {username: req.session.username, 
-                  postPicSrc: "/post/"+req.params.postID,
+                  postPicSrc: '/post/' + req.params.postID,
                   likenum: post.likes.length, 
                   postID: req.params.postID, 
                   heartBtnClass: 'heartbutton',
@@ -187,7 +187,7 @@ router.get('/mypostpic/:postID', function (req, res) {
                   commentCreater: commentUsernameArray,
                   commentDate: commentDateArray, 
                   commentContent: commentContentArray,
-                  allcommentsrequest: '/allcomments/'+req.params.postID});
+                  allcommentsrequest: '/allcomments/' + req.params.postID});
               }
            });
           });
@@ -209,7 +209,7 @@ router.post('/postpic/like', function (req, res) {
             res.send('error' + err);
           } else {
             //res.send('new user registered with username ' + req.body.username);
-            res.send("ok");
+            res.send('ok');
           }
         });
       } else {
@@ -218,7 +218,7 @@ router.post('/postpic/like', function (req, res) {
             if (err) {
               res.redirect('error' + err);
             } else {
-              res.send("ok");
+              res.send('ok');
             }
           });
         }
@@ -281,13 +281,13 @@ router.get('/allcomments/:postID', function (req, res) {
         commentProfilePicArray[i] = '/profilePic/' + commentData[i].author;
         commentUserProfileArray[i] = '/userprofile/' + commentData[i].author;
         var comDate = new Date(commentData[i].created_at);
-        commentDateArray[i] = comDate.toDateString() + ' ' + comDate.getHours() +':' + comDate.getMinutes();
+        commentDateArray[i] = comDate.toDateString() + ' ' + comDate.getHours() + ':' + comDate.getMinutes();
       }
       res.render('allcomments', {commentUserProfile: commentUserProfileArray,
-                            commentProfilePic: commentProfilePicArray,
-                            commentCreater: commentUsernameArray,
-                            commentDate: commentDateArray, 
-                            commentContent:commentContentArray});
+        commentProfilePic: commentProfilePicArray,
+        commentCreater: commentUsernameArray,
+        commentDate: commentDateArray, 
+        commentContent:commentContentArray});
     });
   });
 });

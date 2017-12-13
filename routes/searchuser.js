@@ -19,24 +19,24 @@ router.get('/searchuser', function (req, res) {
 var exactUser = null;
 var userArray = [];
 router.post('/searchuser', function (req, res) {
- 	var searchTerm = req.body.searchuser;
-	User.findOne({username: searchTerm.toLowerCase()}, function(err, user) {
-		if (user != null) {
-			User.find({'fullname': searchTerm}, function(err, docs) {
-				var array = [user];
-				for (var i = 0; i < docs.length; i++) {
-					if (docs[i].username != user.username) {
-						array.push(docs[i]);
-					}
-				}
-				res.send(array);
-			}); 
-		} else {
-			User.find({'fullname': searchTerm}, function(err, docs) {
-		 		res.send(docs);
-			});
-		}  
- 	});
+  var searchTerm = req.body.searchuser;
+  User.findOne({username: searchTerm.toLowerCase()}, function (err, user) {
+    if (user != null) {
+      User.find({'fullname': searchTerm}, function (err, docs) {
+	    var array = [user];
+	    for (var i = 0; i < docs.length; i++) {
+		  if (docs[i].username != user.username) {
+		    array.push(docs[i]);
+		  }
+	    }
+	    res.send(array);
+      }); 
+    } else {
+      User.find({'fullname': searchTerm}, function (err, docs) {
+	    res.send(docs);
+      });
+    }  
+  });
 });
 
 module.exports = router;
